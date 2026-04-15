@@ -450,7 +450,7 @@
         </div>
       </div>
       <div class="chart-card">
-        <div class="chart-title"><i class="fas fa-credit-card"></i> Estado evaluaciones crédito (10)</div>
+        <div class="chart-title"><i class="fas fa-credit-card"></i> Estado evaluaciones crédito</div>
         <div class="chart-container" style="height:210px;">
           <canvas id="abrilEvalChart"></canvas>
         </div>
@@ -548,7 +548,7 @@
     if (abrilContactCtx) {
       new Chart(abrilContactCtx, {
         type: 'bar',
-        data: { labels: ['Gestión Abril'], datasets: [{ label: 'Contacto efectivo (11)', data: [11], backgroundColor: '#2563eb', borderRadius: 8 }, { label: 'No contactado (26)', data: [26], backgroundColor: '#94a3b8', borderRadius: 8 }] },
+        data: { labels: ['Gestión Abril'], datasets: [{ label: 'Contacto efectivo (26)', data: [26], backgroundColor: '#2563eb', borderRadius: 8 }, { label: 'No contactado (17)', data: [17], backgroundColor: '#94a3b8', borderRadius: 8 }] },
         options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top', labels: { font: { size: 10 } } } }, scales: { x: { stacked: true, max: 40 }, y: { display: false } } }
       });
     }
@@ -576,7 +576,7 @@
     if (abrilEvalCtx) {
       new Chart(abrilEvalCtx, {
         type: 'bar',
-        data: { labels: ['Aprobado/Contrato', 'Mesa control', 'Recuperador', 'Buró/Rechazo'], datasets: [{ data: [2, 2, 5, 1], backgroundColor: ['#10b981', '#3b82f6', '#facc15', '#ef4444'] }] },
+        data: { labels: ['Aprobado/Contrato', 'Mesa control', 'Recuperador', 'Cerrador'], datasets: [{ data: [1, 2, 4, 1], backgroundColor: ['#10b981', '#3b82f6', '#facc15', '#ef4444'] }] },
         options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
       });
     }
