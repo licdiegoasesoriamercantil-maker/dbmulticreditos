@@ -430,7 +430,7 @@
           <canvas id="abrilContactChart"></canvas>
         </div>
         <div class="legend-inline">
-          <span><span class="legend-color" style="background:#2563eb;"></span> Contacto efectivo (26)</span>
+          <span><span class="legend-color" style="background:#2563eb;"></span>Clientes contactados (26)</span>
           <span><span class="legend-color" style="background:#94a3b8;"></span> No contactado (17)</span>
         </div>
       </div>
@@ -548,7 +548,7 @@
     if (abrilContactCtx) {
       new Chart(abrilContactCtx, {
         type: 'bar',
-        data: { labels: ['Gestión Abril'], datasets: [{ label: 'Contacto efectivo (26)', data: [26], backgroundColor: '#2563eb', borderRadius: 8 }, { label: 'No contactado (17)', data: [17], backgroundColor: '#94a3b8', borderRadius: 8 }] },
+        data: { labels: ['Gestión Abril'], datasets: [{ label: 'Clientes contactados (26)', data: [26], backgroundColor: '#2563eb', borderRadius: 8 }, { label: 'No contactado (17)', data: [17], backgroundColor: '#94a3b8', borderRadius: 8 }] },
         options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top', labels: { font: { size: 10 } } } }, scales: { x: { stacked: true, max: 40 }, y: { display: false } } }
       });
     }
