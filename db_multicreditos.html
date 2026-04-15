@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+  <title>Dashboard Multicreditos</title>
+  <!-- Fuentes & Iconos -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f4f9fe;
+      font-family: 'Inter', sans-serif;
+      color: #0f2b3d;
+      padding: 28px 24px;
+    }
+
+    .dashboard {
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    /* TABS */
+    .tabs-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 28px;
+      border-bottom: 1px solid #cfdfed;
+      padding-bottom: 4px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      padding: 12px 32px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #4a627a;
+      border-radius: 40px 40px 0 0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-btn i {
+      font-size: 1rem;
+      color: #6c86a3;
+    }
+
+    .tab-btn.active {
+      background: white;
+      color: #1e4bd2;
+      border-bottom: 3px solid #1e4bd2;
+      box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.02);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fade 0.2s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(6px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    /* header */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 1.9rem;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #0f2b3d;
+    }
+
+    .subtitle-note {
+      background: #eef3fc;
+      padding: 6px 18px;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      color: #1e4bd2;
+    }
+
+    /* KPI cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .kpi-card {
+      background: white;
+      border-radius: 28px;
+      padding: 20px 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02);
+      border: 1px solid #e6edf4;
+      transition: all 0.2s;
+    }
+
+    .kpi-icon {
+      font-size: 2rem;
+      color: #2c6eef;
+      margin-bottom: 14px;
+    }
+
+    .kpi-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #0a2540;
+    }
+
+    .kpi-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #5b6f8c;
+      margin-top: 6px;
+    }
+
+    .kpi-trend {
+      font-size: 0.75rem;
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #eef2fa;
+      padding: 4px 12px;
+      border-radius: 40px;
+      color: #1f4f8a;
+      font-weight: 500;
+    }
+
+    /* charts grid */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .chart-card {
+      background: white;
+      border-radius: 28px;
+      padding: 18px 20px 20px 20px;
+      border: 1px solid #e6edf4;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+      transition: all 0.2s;
+    }
+
+    .chart-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px dashed #dfe8f0;
+      padding-bottom: 12px;
+      color: #1f3a5f;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 250px;
+      width: 100%;
+    }
+
+    .donut-container {
+      height: 260px;
+    }
+
+    /* tablas dobles */
+    .bottom-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 8px;
+      margin-bottom: 20px;
+    }
+
+    .table-wrapper {
+      background: white;
+      border-radius: 28px;
+      padding: 18px 18px 22px 18px;
+      border: 1px solid #e6edf4;
+      overflow-x: auto;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+    }
+
+    .table-wrapper h3 {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #1f3a5f;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    th {
+      text-align: left;
+      padding: 12px 6px 8px 0;
+      font-weight: 600;
+      color: #3a5a7c;
+      border-bottom: 1px solid #e2eaf1;
+    }
+
+    td {
+      padding: 10px 6px 10px 0;
+      border-bottom: 1px solid #f0f4fa;
+      vertical-align: middle;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #eef2ff;
+      color: #2563eb;
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-green {
+      background: #e0f2e7;
+      color: #0b5e42;
+    }
+
+    .badge-red {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .badge-gray {
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .table-note {
+      margin-top: 14px;
+      background: #f8fafd;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: #4a6a8a;
+      display: inline-block;
+    }
+
+    .footer-note {
+      margin-top: 24px;
+      text-align: right;
+      font-size: 0.7rem;
+      color: #7b8ea8;
+      border-top: 1px solid #e2eaf1;
+      padding-top: 18px;
+    }
+
+    /* responsive */
+    @media (max-width: 1000px) {
+      body { padding: 20px 16px; }
+      .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .charts-row { grid-template-columns: 1fr; gap: 18px; }
+      .bottom-row { grid-template-columns: 1fr; gap: 20px; }
+      .chart-container { height: 210px; }
+    }
+
+    @media (max-width: 550px) {
+      .kpi-grid { grid-template-columns: 1fr; }
+      .tab-btn { padding: 8px 18px; font-size: 0.9rem; }
+      h1 { font-size: 1.5rem; }
+    }
+
+    /* legend inline */
+    .legend-inline {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 12px;
+      font-size: 0.7rem;
+    }
+    .legend-color {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 4px;
+      margin-right: 4px;
+    }
+  </style>
+</head>
+<body>
+<div class="dashboard">
+  <!-- Pestañas -->
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="marzo"><i class="far fa-calendar-alt"></i> Marzo 2026</button>
+    <button class="tab-btn" data-tab="abril"><i class="far fa-calendar-check"></i> Abril 2026</button>
+  </div>
+
+  <!-- =================== MARZO 2026 =================== -->
+  <div id="marzo" class="tab-content active">
+    <div class="page-header">
+      <div>
+        <h1><i class="fas fa-chart-pie" style="color: #2c6eef;"></i> Reporte MARZO 2026</h1>
+      </div>
+      
+    </div>
+
+    <!-- KPIs marzo -->
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-icon"><i class="fas fa-users"></i></div><div class="kpi-value">214</div><div class="kpi-label">Prospectos</div></div>
+      <div class="kpi-card"><div class="kpi-icon"><i class="fas fa-phone-alt"></i></div><div class="kpi-value">90</div><div class="kpi-label">Contactos efectivos</div><span class="kpi-trend"><i class="fas fa-percent"></i> 41.8% tasa contacto</span></div>
+      <div class="kpi-card"><div class="kpi-icon"><i class="fas fa-file-invoice"></i></div><div class="kpi-value">14</div><div class="kpi-label">Evaluaciones crédito</div><span class="kpi-trend"><i class="fas fa-building"></i> DIMEX + KAPITALIZA</span></div>
+      <div class="kpi-card"><div class="kpi-icon"><i class="fas fa-check-circle" style="color:#059669;"></i></div><div class="kpi-value">3</div><div class="kpi-label">Créditos dispersados</div><span class="kpi-trend"><i class="fas fa-trophy"></i> 21.4% de evaluados</span></div>
+    </div>
+
+    <!-- gráficos fila 1 -->
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-title"><i class="fas fa-funnel-dollar"></i> Embudo de conversión</div>
+        <div class="chart-container">
+          <canvas id="marzoFunnelChart"></canvas>
+        </div>
+        <div class="legend-inline">
+          <span><span class="legend-color" style="background:#3b82f6;"></span> Prospectos 214</span>
+          <span><span class="legend-color" style="background:#f59e0b;"></span> Contacto 90</span>
+          <span><span class="legend-color" style="background:#8b5cf6;"></span> Evaluados 14</span>
+          <span><span class="legend-color" style="background:#10b981;"></span> Dispersados 3</span>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title"><i class="fas fa-tags"></i> Tipificación contactos efectivos (90)</div>
+        <div class="chart-container donut-container">
+          <canvas id="marzoTipiChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- gráficos fila 2 -->
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-title"><i class="fas fa-user-check"></i> Efectividad por agente</div>
+        <div class="chart-container" style="height:210px;">
+          <canvas id="marzoAgentChart"></canvas>
+        </div>
+        
+      </div>
+      <div class="chart-card">
+        <div class="chart-title"><i class="fas fa-balance-scale"></i> Resultado evaluaciones (14 unificados)</div>
+        <div class="chart-container" style="height:210px;">
+          <canvas id="marzoEvalChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla única (ancho completo) marzo -->
+    <div class="table-wrapper" style="margin-top: 4px;">
+      <h3><i class="fas fa-credit-card"></i> Créditos evaluados · detalle unificado</h3>
+      <div style="overflow-x: auto;">
+        <table style="min-width: 480px;">
+          <thead><tr><th>Cliente</th><th>Resultado final</th></tr></thead>
+          <tbody>
+            <tr><td>MIRANDA VALDESPINO DAVID</td><td><span class="badge badge-green">APROBADO (Dispersada)</span></td></tr>
+            <tr><td>ZAMORA SANDOVAL MARCO A.</td><td><span class="badge badge-green">APROBADO</span></td></tr>
+            <tr><td>LANDEROS MARQUEZ SILVIA</td><td><span class="badge badge-green">APROBADO</span></td></tr>
+            <tr><td>GARCIA VALDEZ ANA IRASEMA</td><td><span class="badge badge-red">Sin capacidad</span></td></tr>
+            <tr><td>OYERVIDES RAMOS JUANA M.</td><td><span class="badge badge-red">Sin capacidad</span></td></tr>
+            <tr><td>URBALEJO ISAGUIRRE G.</td><td><span class="badge badge-gray">Buró de crédito</span></td></tr>
+            <tr><td>MUÑOZ MARTINEZ ENRIQUE</td><td><span class="badge badge-gray">Declina / Tasa alta</span></td></tr>
+            <tr><td>LEONARDO MIRANDA T.</td><td><span class="badge">Seguimiento</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-note"><i class="fas fa-chart-line"></i> 3 dispersados · 5 sin capacidad (principal motivo rechazo)</div>
+    </div>
+  </div>
+
+  <!-- =================== ABRIL 2026 =================== -->
+  <div id="abril" class="tab-content">
+    <div class="page-header">
+      <div><h1><i class="fas fa-chart-line" style="color:#2c6eef;"></i> Reporte ABRIL 2026</h1></div>
+      <div class="subtitle-note"><i class="fas fa-chart-simple"></i> Seguimiento + nuevos prospectos</div>
+    </div>
+
+    <!-- KPIs abril -->
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="kpi-icon"><i class="fas fa-users"></i></div><div class="kpi-value">37</div><div class="kpi-label">Prospectos</div><span class="kpi-trend"><i class="fas fa-check-circle"></i> </span></div>
+      <div class="kpi-card"><div class="kpi-icon"><i class="fas fa-phone-alt"></i></div><div class="kpi-value">11</div><div class="kpi-label">Contactos efectivos</div><span class="kpi-trend" style="background:#fef3c7; color:#b45309;"><i class="fas fa-percent"></i> 29.7% tasa contacto</span></div>
+      <div class="kpi-card"><div class="kpi-icon"><i class="fas fa-file-signature"></i></div><div class="kpi-value">44</div><div class="kpi-label">Seguimiento</div><span class="kpi-trend"><i class="fas fa-user-clock"></i> Oportunidades activas</span></div>
+      <div class="kpi-card"><div class="kpi-icon"><i class="fas fa-check-circle" style="color:#059669;"></i></div><div class="kpi-value">4</div><div class="kpi-label">Avance positivo</div><span class="kpi-trend" style="background:#e0f2e7; color:#0b5e42;"><i class="fas fa-file-contract"></i> Aprobados / Contrato</span></div>
+    </div>
+
+    <!-- gráficos fila 1 abril -->
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-title"><i class="fas fa-phone-slash"></i> Resultado de gestión</div>
+        <div class="chart-container" style="height:210px;">
+          <canvas id="abrilContactChart"></canvas>
+        </div>
+        <div class="legend-inline">
+          <span><span class="legend-color" style="background:#2563eb;"></span> Contacto efectivo (11)</span>
+          <span><span class="legend-color" style="background:#94a3b8;"></span> No contactado (26)</span>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title"><i class="fas fa-list-check"></i> Tipificación seguimiento (44)</div>
+        <div class="chart-container donut-container">
+          <canvas id="abrilSeguimientoChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-title"><i class="fas fa-user-tie"></i> Efectividad agentes Abril</div>
+        <div class="chart-container" style="height:210px;">
+          <canvas id="abrilAgentChart"></canvas>
+        </div>
+        <div class="table-note" style="margin-top:8px;"><i class="fas fa-info-circle"></i> Lore: 25 intentos (20% efectividad) · Monse: 12 intentos (50% efectividad)</div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title"><i class="fas fa-credit-card"></i> Estado evaluaciones crédito (10)</div>
+        <div class="chart-container" style="height:210px;">
+          <canvas id="abrilEvalChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- dos tablas: seguimiento + dimex/multiva -->
+    <div class="bottom-row">
+      <div class="table-wrapper">
+        <h3><i class="fas fa-hourglass-half"></i> Oportunidades en seguimiento</h3>
+        <div style="overflow-x: auto;">
+          <table style="min-width: 500px;">
+            <thead><tr><th>Cliente</th><th>Teléfono / Contacto</th><th>Comentario</th></tr></thead>
+            <tbody>
+              <tr><td>MENDEZ CHAVEZ SALVADOR</td><td>4651179410</td><td>Llamar lunes 5:30 pm</td></tr>
+              <tr><td>MARQUEZ RODRIGUEZ MARTIN</td><td>8111669261</td><td>Desconfiado, dar seguimiento</td></tr>
+              <tr><td>RAUL CHAVEZ URBINA</td><td>6566708077</td><td>larola721@gmail.com</td></tr>
+              <tr><td>DOLORES MORAN RODRIGUEZ</td><td>2741008445</td><td>Espera referencias</td></tr>
+              <tr><td>GIL LOPEZ JOSE</td><td>4448502286</td><td>Irá al banco por estados de cuenta</td></tr>
+              <tr><td>RUBEN CHANON RAMIREZ</td><td>8992188158</td><td>Documentos capacidad</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="table-wrapper">
+        <h3><i class="fas fa-building-columns"></i> Crédito DIMEX / MULTIVA KAPI</h3>
+        <div style="overflow-x: auto;">
+          <table style="min-width: 420px;">
+            <thead><tr><th>Cliente</th><th>Monto</th><th>Estatus</th></tr></thead>
+            <tbody>
+              <tr><td>RUBEN CHANON R.</td><td>$22,578</td><td><span class="badge badge-green">Aprobado DIMEX</span></td></tr>
+              <tr><td>IGNACIO MENDOZA D.</td><td>$188,545</td><td><span class="badge badge-green">CONTRATO</span></td></tr>
+              <tr><td>CESAR PEREZ CALDERON</td><td>$11,381</td><td>MESA DE CONTROL</td></tr>
+              <tr><td>ELVIRA ALMARAZ DEL RIO</td><td>$92,707</td><td>MESA DE CONTROL</td></tr>
+              <tr><td>JUAREZ CASTRO GERMAN</td><td>$28,000</td><td><span class="badge badge-red">Buró crédito</span></td></tr>
+              <tr><td>LOPEZ SEVILLANO ANDRES</td><td>$8,400</td><td>RECUPERADOR</td></tr>
+              <tr><td>FLORES JAQUEZ FCO.</td><td>$12,900</td><td>RECUPERADOR</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-note"><i class="fas fa-chart-pie"></i> Total evaluados: 10 · 4 con avance positivo (aprobado/contrato/mesa control)</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-note">
+    
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ----- MARZO gráficos -----
+    const funnelCtx = document.getElementById('marzoFunnelChart')?.getContext('2d');
+    if (funnelCtx) {
+      new Chart(funnelCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Prospectos únicos', 'Contacto efectivo', 'Evaluaciones', 'Créditos dispersados'],
+          datasets: [{ label: 'Cantidad', data: [214, 90, 14, 3], backgroundColor: ['#3b82f6', '#f59e0b', '#8b5cf6', '#10b981'], borderRadius: 8 }]
+        },
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, layout: { padding: { top: 6, bottom: 6 } } }
+      });
+    }
+
+    const tipiCtx = document.getElementById('marzoTipiChart')?.getContext('2d');
+    if (tipiCtx) {
+      new Chart(tipiCtx, {
+        type: 'doughnut',
+        data: { labels: ['No interesa (22)','Cuelga (18)','No quiere deudas (11)','Mensaje (9)','Finado/Equiv (7)','Poca disp (6)','Buzón persona (5)','Agendado (4)','Otros (8)'],
+        datasets: [{ data: [22,18,11,9,7,6,5,4,8], backgroundColor: ['#ef4444','#f97316','#eab308','#3b82f6','#6b7280','#a855f7','#64748b','#10b981','#94a3b8'] }] },
+        options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } } }, cutout: '60%' }
+      });
+    }
+
+    const agentCtx = document.getElementById('marzoAgentChart')?.getContext('2d');
+    if (agentCtx) {
+      new Chart(agentCtx, {
+        type: 'bar',
+        data: { labels: ['Monse', 'Tamara', 'Paula', 'Jatziry'], datasets: [{ label: 'Intentos totales', data: [83, 18, 15, 14], backgroundColor: '#94a3b8' }, { label: 'Contactos efectivos', data: [32, 9, 5, 4], backgroundColor: '#2563eb' }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top', labels: { font: { size: 11 } } } } }
+      });
+    }
+
+    const evalCtx = document.getElementById('marzoEvalChart')?.getContext('2d');
+    if (evalCtx) {
+      new Chart(evalCtx, {
+        type: 'bar',
+        data: { labels: ['Aprobado', 'Sin capacidad', 'Declina/Tasa', 'Buró', 'Seguimiento', 'Ilocalizable'], datasets: [{ data: [3,5,2,1,2,1], backgroundColor: ['#10b981','#ef4444','#f97316','#6b7280','#facc15','#64748b'] }] },
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+      });
+    }
+
+    // ----- ABRIL gráficos -----
+    const abrilContactCtx = document.getElementById('abrilContactChart')?.getContext('2d');
+    if (abrilContactCtx) {
+      new Chart(abrilContactCtx, {
+        type: 'bar',
+        data: { labels: ['Gestión Abril'], datasets: [{ label: 'Contacto efectivo (11)', data: [11], backgroundColor: '#2563eb', borderRadius: 8 }, { label: 'No contactado (26)', data: [26], backgroundColor: '#94a3b8', borderRadius: 8 }] },
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top', labels: { font: { size: 10 } } } }, scales: { x: { stacked: true, max: 40 }, y: { display: false } } }
+      });
+    }
+
+    const abrilSegCtx = document.getElementById('abrilSeguimientoChart')?.getContext('2d');
+    if (abrilSegCtx) {
+      new Chart(abrilSegCtx, {
+        type: 'doughnut',
+        data: { labels: ['Buzón (13)','Cliente cuelga (8)','No le interesa (5)','Seguimiento/doc (5)','Ya tiene créditos (2)','No contesta (2)','Otros (9)'],
+        datasets: [{ data: [13,8,5,5,2,2,9], backgroundColor: ['#64748b','#f97316','#ef4444','#10b981','#eab308','#94a3b8','#a855f7'] }] },
+        options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'right', labels: { boxWidth: 10, font: { size: 9 } } } }, cutout: '55%' }
+      });
+    }
+
+    const abrilAgentCtx = document.getElementById('abrilAgentChart')?.getContext('2d');
+    if (abrilAgentCtx) {
+      new Chart(abrilAgentCtx, {
+        type: 'bar',
+        data: { labels: ['Lore', 'Monse'], datasets: [{ label: 'Intentos', data: [25, 12], backgroundColor: '#94a3b8' }, { label: 'Efectivos', data: [5, 6], backgroundColor: '#2563eb' }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } } }
+      });
+    }
+
+    const abrilEvalCtx = document.getElementById('abrilEvalChart')?.getContext('2d');
+    if (abrilEvalCtx) {
+      new Chart(abrilEvalCtx, {
+        type: 'bar',
+        data: { labels: ['Aprobado/Contrato', 'Mesa control', 'Recuperador', 'Buró/Rechazo'], datasets: [{ data: [2, 2, 5, 1], backgroundColor: ['#10b981', '#3b82f6', '#facc15', '#ef4444'] }] },
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+      });
+    }
+
+    // TABS
+    const tabs = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabId = btn.getAttribute('data-tab');
+        tabs.forEach(b => b.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(tabId).classList.add('active');
+        // pequeño delay para redimensionar gráficos si es necesario (opcional)
+        setTimeout(() => {
+          window.dispatchEvent(new Event('resize'));
+        }, 100);
+      });
+    });
+  })();
+</script>
+</body>
+</html>
