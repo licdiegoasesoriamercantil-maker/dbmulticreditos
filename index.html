@@ -318,7 +318,7 @@
       <div class="chart-card">
         <div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus Multiva Kapi</div>
         <div class="chart-container" style="height:210px;">
-          <canvas id="abrilStatusChart"></canvas>
+          <canvas id="multivaStatusChart"></canvas>
         </div>
       </div>
       <div class="chart-card">
@@ -422,6 +422,15 @@
     }
 
     const abrilStatusCtx = document.getElementById('abrilStatusChart')?.getContext('2d');
+    if (abrilStatusCtx) {
+      new Chart(abrilStatusCtx, {
+        type: 'doughnut',
+        data: { labels: ['Aprobado (1)', 'Rechazado Buró (1)', 'Sin Capacidad (6)'], datasets: [{ data: [1, 1, 6], backgroundColor: ['#10b981', '#ef4444', '#0000ff'] }] },
+        options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'top' } }, cutout: '60%' }
+      });
+    }
+
+    const abrilStatusCtx = document.getElementById('multivaStatusChart')?.getContext('2d');
     if (abrilStatusCtx) {
       new Chart(abrilStatusCtx, {
         type: 'doughnut',
