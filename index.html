@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
-  <title>Multicréditos · Abril 2026</title>
+  <title>Multicréditos · Abril 2026 · Gestión Avanzada</title>
   <!-- Fuentes e Iconos -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -106,6 +106,63 @@
       font-weight: 500;
     }
 
+    /* progress row */
+    .progress-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+    .progress-card {
+      background: white;
+      border-radius: 28px;
+      padding: 18px 22px;
+      border: 1px solid #e6edf4;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .progress-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      color: #1f3a5f;
+    }
+    .progress-bar-container {
+      background: #e9eef3;
+      border-radius: 32px;
+      height: 28px;
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .progress-fill {
+      background: #2c6eef;
+      width: 0%;
+      height: 100%;
+      border-radius: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 12px;
+      color: white;
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
+    .progress-stats {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-top: 6px;
+    }
+    .badge-goal {
+      background: #eef2ff;
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+    }
+
     /* charts grid */
     .charts-row {
       display: grid;
@@ -141,11 +198,7 @@
       width: 100%;
     }
 
-    .donut-container {
-      height: 260px;
-    }
-
-    /* tablas dobles */
+    /* tablas */
     .bottom-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -243,104 +296,99 @@
       padding-top: 18px;
     }
 
-    /* responsive */
     @media (max-width: 1000px) {
       body { padding: 20px 16px; }
       .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .progress-row { grid-template-columns: 1fr; gap: 16px; }
       .charts-row { grid-template-columns: 1fr; gap: 18px; }
       .bottom-row { grid-template-columns: 1fr; gap: 20px; }
-      .chart-container { height: 210px; }
     }
-
     @media (max-width: 550px) {
       .kpi-grid { grid-template-columns: 1fr; }
       h1 { font-size: 1.5rem; }
     }
-
-    /* legend inline */
-    .legend-inline {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 12px;
-      font-size: 0.7rem;
-    }
-    .legend-color {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      border-radius: 4px;
-      margin-right: 4px;
-    }
+    .legend-inline { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-top: 12px; font-size: 0.7rem; }
+    .legend-color { display: inline-block; width: 12px; height: 12px; border-radius: 4px; margin-right: 4px; }
   </style>
 </head>
 <body>
 <div class="dashboard">
-  
-  <!-- =================== ABRIL 2026 =================== -->
-  <div id="abril" class="tab-content active">
-    <div class="page-header">
-      <div><h1><i class="fas fa-chart-line" style="color:#2c6eef;"></i> Abril 2026 · Gestión y Seguimiento</h1></div>
-    </div>
+  <div class="page-header">
+    <div><h1><i class="fas fa-chart-line" style="color:#2c6eef;"></i> Abril 2026 · Gestión y Seguimiento</h1></div>
+    
+  </div>
 
-    <!-- KPIs abril -->
-    <div class="kpi-grid">
-      <div class="kpi-card"><div class="kpi-icon"><i class="fas fa-phone-alt"></i></div><div class="kpi-value">45</div><div class="kpi-label">Gestiones</div><span class="kpi-trend"></span></div>
-      <div class="kpi-card"><div class="kpi-icon"><i class="fas fa-check-circle" style="color:#059669;"></i></div><div class="kpi-value">1</div><div class="kpi-label">✅ Aprobado DIMEX</div><span class="kpi-trend">nuevo en abril</span></div>
-      <div class="kpi-card"><div class="kpi-icon"><i class="fas fa-building"></i></div><div class="kpi-value">$367K</div><div class="kpi-label">Pipeline Multiva</div><span class="kpi-trend">9 clientes activos</span></div>
-      <div class="kpi-card"><div class="kpi-icon"><i class="fas fa-chart-line"></i></div><div class="kpi-value">190+</div><div class="kpi-label">Llamadas campaña</div><span class="kpi-trend">abril acumuladas</span></div>
-    </div>
+  <!-- KPIs principales -->
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-icon"><i class="fas fa-phone-alt"></i></div><div class="kpi-value">522</div><div class="kpi-label">Gestiones totales (Abril)</div><span class="kpi-trend"><i class="fas fa-chart-simple"></i></span></div>
+    <div class="kpi-card"><div class="kpi-icon"><i class="fas fa-check-circle" style="color:#059669;"></i></div><div class="kpi-value">1</div><div class="kpi-label">✅ Aprobado DIMEX</div><span class="kpi-trend">$22,578 desembolsado</span></div>
+    <div class="kpi-card"><div class="kpi-icon"><i class="fas fa-hand-holding-usd"></i></div><div class="kpi-value">$1.05M</div><div class="kpi-label">Pipeline total (Comprado+Transferido)</div><span class="kpi-trend">DIMEX + MULTIVA</span></div>
+    <div class="kpi-card"><div class="kpi-icon"><i class="fas fa-chart-line"></i></div><div class="kpi-value">198+</div><div class="kpi-label">Llamadas campaña (abril)</div><span class="kpi-trend">últimos 3 días</span></div>
+  </div>
 
-    <!-- gráficos fila 1 abril -->
-    <div class="charts-row">
-      <div class="chart-card">
-        <div class="chart-title"><i class="fas fa-tags"></i> Tipificaciones · Base abril</div>
-        <div class="chart-container" style="height:210px;">
-          <canvas id="abrilTipiChart"></canvas>
-        </div>
-      </div>
-      <div class="chart-card">
-        <div class="chart-title"><i class="fas fa-list-check"></i> Gestión de campañas · abril</div>
-        <div class="chart-container donut-container">
-          <canvas id="abrilGestionChart"></canvas>
-        </div>
-      </div>
+  <!-- METAS: comprado / transferido  (DIMEX + MULTIVA) -->
+  <div class="progress-row">
+    <div class="progress-card">
+      <div class="progress-title"><i class="fas fa-chart-simple"></i> DIMEX · Meta</div>
+      <div class="progress-bar-container"><div class="progress-fill" id="dimexCompradoFill" style="width: 12.5%; background:#059669;">12.5%</div></div>
+      <div class="progress-stats"><span>✅ Comprado: <strong id="dimexCompradoVal">$00,000</strong></span><span>🎯 Meta comprado: $100,000</span></div>
+      <div class="progress-bar-container mt-2" style="margin-top:12px"><div class="progress-fill" id="dimexTransferFill" style="width: 22.7%; background:#2c6eef;">22.7%</div></div>
+      <div class="progress-stats"><span>🔄 Transferido: <strong id="dimexTransferVal">$050,000</strong></span><span>🎯 Meta transferido: $250,000</span></div>
     </div>
+    <div class="progress-card">
+      <div class="progress-title"><i class="fas fa-building-columns"></i> MULTIVA KAPI · Meta</div>
+      <div class="progress-bar-container"><div class="progress-fill" id="multivaCompradoFill" style="width: 40%; background:#059669;">40%</div></div>
+      <div class="progress-stats"><span>✅ Comprado: <strong id="multivaCompradoVal">$218,659.61</strong></span><span>🎯 Meta comprado: $600,000</span></div>
+      <div class="progress-bar-container mt-2" style="margin-top:12px"><div class="progress-fill" id="multivaTransferFill" style="width: 45%; background:#2c6eef;">45%</div></div>
+      <div class="progress-stats"><span>🔄 Transferido: <strong id="multivaTransferVal">$900,000</strong></span><span>🎯 Meta transferido: $900,000</span></div>
+    </div>
+  </div>
 
-    <div class="charts-row">
-      <div class="chart-card">
-        <div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus DIMEX</div>
-        <div class="chart-container" style="height:210px;">
-          <canvas id="abrilStatusChart"></canvas>
-        </div>
+  <!-- gráficos de tipificaciones (basado en CSV multiva) y gestión campaña -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title"><i class="fas fa-tags"></i> Tipificaciones · Campaña Multiva (Abril)</div>
+      <div class="chart-container" style="height:220px;">
+        <canvas id="multivaTipiChart"></canvas>
       </div>
-      <div class="chart-card">
-        <div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus Multiva Kapi</div>
-        <div class="chart-container" style="height:210px;">
-          <canvas id="multivaStatusChart"></canvas>
-        </div>
+      
+    </div>
+    <div class="chart-card">
+      <div class="chart-title"><i class="fas fa-list-check"></i> Gestión de contactos · MULTIVA</div>
+      <div class="chart-container donut-container" style="height:220px;">
+        <canvas id="multivaGestionChart"></canvas>
       </div>
-      <div class="chart-card">
-        <div class="chart-title"><i class="fas fa-credit-card"></i> Créditos aprobados acumulados</div>
-        <div class="chart-container" style="height:200px;">
-          <canvas id="abrilAccumChart"></canvas>
-        </div>
-        <div class="legend-inline">
-          <span><span class="legend-color" style="background:#10b981;"></span> Monto total: $87,201</span>
-        </div>
+      <div class="legend-inline">
+        <span><span class="legend-color" style="background:#10b981;"></span> Cliente cuelga</span>
+        <span><span class="legend-color" style="background:#ef4444;"></span> No le interesa</span>
+        <span><span class="legend-color" style="background:#f97316;"></span> Molesto / sin convenio</span>
+        <span><span class="legend-color" style="background:#64748b;"></span> Buzón/No contesta</span>
       </div>
     </div>
+  </div>
 
-    <!-- dos tablas: DIMEX abril + Multiva Kapi abril -->
-    <div class="bottom-row">
-      <div class="table-wrapper">
-        <h3><i class="fas fa-check-circle"></i> DIMEX · Abril</h3>
-        <div style="overflow-x: auto;">
-          <table style="min-width: 400px;">
-            <thead><tr><th>Cliente</th><th>Monto</th><th>Estatus</th><th>Comentario</th></tr></thead>
-            <tbody>
-              <tr style="background:#e8f5e9;"><td>✅ RUBEN CHANON RAMIREZ</th><td>$22,578</td><td><span class="badge-green">Aprobado</span></td></tr>
+  <!-- estatus DIMEX y Multiva resumen -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus DIMEX · Abril</div>
+      <div class="chart-container" style="height:210px;"><canvas id="abrilStatusChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus Multiva Kapi (Pipeline)</div>
+      <div class="chart-container" style="height:210px;"><canvas id="multivaEstatusPipelineChart"></canvas></div>
+    </div>
+    
+  </div>
+
+  <!-- Dos tablas: DIMEX actualizada + Multiva KPI -->
+  <div class="bottom-row">
+    <div class="table-wrapper">
+      <h3><i class="fas fa-check-circle"></i> DIMEX · Abril</h3>
+      <div style="overflow-x: auto;">
+        <table style="min-width: 420px;">
+          <thead><tr><th>Cliente / Concepto</th><th>Monto</th><th>Estatus</th><th>Comentario</th></tr></thead>
+          <tbody>
+            <tr style="background:#e8f5e9;"><td>✅ RUBEN CHANON RAMIREZ</th><td>$22,578</td><td><span class="badge-green">Aprobado</span></td></tr>
               <tr><td>❌ JUAREZ CASTRO GERMAN</th><td>$28,000</td><td><span class="badge-gray">Buró de crédito</span></td><td>Rechazo en Oli</td></tr>
               <tr><td>❌ VICTOR MOLINA LICEA</th><td>0</td><td><span class="badge-gray">Sin capacidad</span></td><td>Sobreendeudamiento</td></tr>
               <tr><td>❌ CIRILO ZAMORA SANTOS</th><td>0</td><td><span class="badge-gray">Sin capacidad</span></td><td>Atraso con DIMEX</td></tr>
@@ -349,18 +397,18 @@
               <tr><td>❌ PEDRO CLEMENTE MONTES DE OCA</th><td>0</td><td><span class="badge-gray">Sin capacidad</span></td><td>Sin capacidad</td></tr>
               <tr><td>❌ HERMELINDO RAMIREZ ALDANA</th><td>0</td><td><span class="badge-gray">Sin capacidad</span></td><td>Atraso con DIMEX</td></tr>
 
-            </tbody>
-          </table>
-        </div>
-        <div class="table-note"><i class="fas fa-chart-line"></i> Conversión base → aprobado: 0.05%</div>
+          </tbody>
+        </table>
       </div>
-      <div class="table-wrapper">
-        <h3><i class="fas fa-building-columns"></i> Multiva Kapi · Pipeline abril</h3>
-        <div style="overflow-x: auto;">
-          <table style="min-width: 450px;">
-            <thead><tr><th>Cliente</th><th>Monto</th><th>Estatus</th></tr></thead>
-            <tbody>
-              <tr><td>López Sevillano Andrés</th><td>$8,400</td><td><span class="badge">Recuperador</span></td></tr>
+      
+    </div>
+    <div class="table-wrapper">
+      <h3><i class="fas fa-building-columns"></i> Multiva Kapi </h3>
+      <div style="overflow-x: auto;">
+        <table style="min-width: 460px;">
+          <thead><tr><th>Cliente</th><th>Monto</th><th>Estatus</th><th>Progreso</th></tr></thead>
+          <tbody>
+            <td>López Sevillano Andrés</th><td>$8,400</td><td><span class="badge">Recuperador</span></td></tr>
               <tr><td>Flores Jáquez Francisco</th><td>$12,900</td><td><span class="badge">Recuperador</span></td></tr>
               <tr><td>Gallardo Hernández Victorino</th><td>$10,000</td><td><span class="badge">Recuperador</span></td></tr>
               <tr><td>López Herrejón Jorge Rafael</th><td>$10,000</td><td><span class="badge">Recuperador</span></td></tr>
@@ -373,74 +421,103 @@
             <tr><td>Raymundo Delgado Garcia</th><td>$9,138.12</td><td><span class="badge-red">Sin Capacidad</span></td></tr>
             <tr><td>Pedro Armando Diaz Ortiz</th><td>-557</td><td><span class="badge-red">Sin Capacidad</span></td></tr>
             <tr><td>Pedro Clemente Montes De Oca Jimenez</th><td>$2,517.28</td><td><span class="badge-red">Sin Capacidad</span></td></tr>
-            </tbody>
-          </table>
-        </div>
-        
-      </div>
-    </div>
-
-    <!-- Tabla seguimiento adicional -->
-    <div class="table-wrapper">
-      <h3><i class="fas fa-hourglass-half"></i> Oportunidades en seguimiento · Abril</h3>
-      <div style="overflow-x: auto;">
-        <table style="min-width: 500px;">
-          <thead><tr><th>Cliente</th><th>Teléfono</th><th>Comentario</th></tr></thead>
-          <tbody>
-            <tr><td>MENDEZ CHAVEZ SALVADOR</th><td>4651179410</td><td>Llamar lunes 5:30 pm</td></tr>
-            <tr><td>MARQUEZ RODRIGUEZ MARTIN</th><td>8111669261</td><td>Desconfiado, dar seguimiento</td></tr>
-            <tr><td>RAUL CHAVEZ URBINA</th><td>6566708077</td><td>larola721@gmail.com</td></tr>
-            <tr><td>DOLORES MORAN RODRIGUEZ</th><td>2741008445</td><td>Espera referencias</td></tr>
-            <tr><td>GIL LOPEZ JOSE</th><td>4448502286</td><td>Irá al banco por estados de cuenta</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
-  
+
+
 </div>
 
 <script>
   (function() {
-    // ----- ABRIL gráficos -----
-    const abrilTipiCtx = document.getElementById('abrilTipiChart')?.getContext('2d');
-    if (abrilTipiCtx) {
-      new Chart(abrilTipiCtx, {
+    // ==== Tipificaciones Multiva basadas en CSV (extracción de disposiciones) ====
+    // Se contabilizaron: "No le gustan los créditos", "Cliente Cuelga", "No quiere tener deudas", "Buzon de voz", "No se encuentra", "Cliente molesto", "Sin convenio", "Consiguió dinero por otro medio", "Tel Equivocado", "Finado", "Ocupado"...
+    const tipiCtx = document.getElementById('multivaTipiChart')?.getContext('2d');
+    if(tipiCtx){
+      new Chart(tipiCtx, {
         type: 'bar',
-        data: { labels: ['No contesta', 'Cliente cuelga', 'Buzón', 'No le interesa'], datasets: [{ label: 'Registros', data: [13, 8, 6, 4], backgroundColor: '#3b82f6', borderRadius: 8 }] },
+        data: {
+          labels: ['No contesta / Buzón', 'Cliente cuelga', 'No le interesa', 'Molesto / Sin convenio', 'No quiere deudas', 'Consiguió otro medio'],
+          datasets: [{ label: 'Registros (Abril)', data: [48, 42, 31, 23, 27, 14], backgroundColor: '#3b82f6', borderRadius: 8 }]
+        },
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } } }
       });
     }
 
-    const abrilGestionCtx = document.getElementById('abrilGestionChart')?.getContext('2d');
-    if (abrilGestionCtx) {
-      new Chart(abrilGestionCtx, {
+    // Gestión de contactos (donut)
+    const gestionCtx = document.getElementById('multivaGestionChart')?.getContext('2d');
+    if(gestionCtx){
+      new Chart(gestionCtx, {
         type: 'doughnut',
-        data: { labels: ['Seguimiento/documentos (8)', 'Buzón (6)', 'No le interesa (4)', 'Cliente cuelga (4)'], datasets: [{ data: [8, 6, 4, 4], backgroundColor: ['#10b981', '#64748b', '#ef4444', '#f97316'] }] },
+        data: { labels: ['Cliente cuelga (42)', 'No le interesa (31)', 'Molesto/Sin convenio (23)', 'Buzón/No contesta (48)'], datasets: [{ data: [42, 31, 23, 48], backgroundColor: ['#10b981', '#ef4444', '#f97316', '#64748b'] }] },
         options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'right', labels: { boxWidth: 12, font: { size: 10 } } } }, cutout: '55%' }
       });
     }
 
-    const abrilStatusCtx = document.getElementById('abrilStatusChart')?.getContext('2d');
-    if (abrilStatusCtx) {
-      new Chart(abrilStatusCtx, {
+    // Estatus DIMEX (incluye nuevo comprado y transferido)
+    const statusCtx = document.getElementById('abrilStatusChart')?.getContext('2d');
+    if(statusCtx){
+      new Chart(statusCtx, {
         type: 'doughnut',
-        data: { labels: ['Aprobado (1)', 'Rechazado Buró (1)', 'Sin Capacidad (6)'], datasets: [{ data: [1, 1, 6], backgroundColor: ['#10b981', '#ef4444', '#0000ff'] }] },
+        data: { labels: ['Aprobado (1)', 'Buro de Crédito', 'Sin Capacidad (7)'], datasets: [{ data: [1, 1,7], backgroundColor: ['#10b981', '#FF0000', '#3b82f6', '#ef4444'] }] },
         options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'top' } }, cutout: '60%' }
       });
     }
 
+    // Estatus Multiva pipeline (comprado existente + nuevos objetos)
+    const multivaPipeCtx = document.getElementById('multivaEstatusPipelineChart')?.getContext('2d');
+    if(multivaPipeCtx){
+      new Chart(multivaPipeCtx, {
+        type: 'doughnut',
+        data: { labels: ['Comprado cartera (4)', 'Recuperador (5)', 'Sin capacidad (4)'], datasets: [{ data: [4, 5, 4], backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444'] }] },
+        options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'top' } }, cutout: '55%' }
+      });
+    }
 
-
-    const abrilAccumCtx = document.getElementById('abrilAccumChart')?.getContext('2d');
-    if (abrilAccumCtx) {
-      new Chart(abrilAccumCtx, {
+    // Acumulado créditos aprobados (Marzo 64,623 + Abr 22,578 = 87,201)
+    const accumCtx = document.getElementById('abrilAccumChart')?.getContext('2d');
+    if(accumCtx){
+      new Chart(accumCtx, {
         type: 'bar',
-        data: { labels: ['Marzo', 'Abril'], datasets: [{ label: 'Monto aprobado ($)', data: [64623, 22578], backgroundColor: '#10b981', borderRadius: 8 }] },
+        data: { labels: ['Marzo', 'Abril (DIMEX + Multiva)'], datasets: [{ label: 'Monto aprobado / comprado ($)', data: [64623, 87201], backgroundColor: '#10b981', borderRadius: 8 }] },
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } } }
       });
     }
 
+    // Actualizar metas en PROGRESS dinamico (con montos fijos según lo solicitado)
+    // DIMEX: comprado=100,000 / meta 800,000 => 12.5%  ; transferido=250,000 / meta 1,100,000 => 22.727%
+    const dimexComprado = 100000, dimexMetaComp = 800000;
+    const dimexTransf = 0, dimexMetaTrans = 250000;
+    const multivaComp = 218659.61, multivaMetaComp = 600000;
+    const multivaTrans = 0, multivaMetaTrans = 900000;
+    
+    document.getElementById('dimexCompradoVal').innerText = `$${dimexComprado.toLocaleString()}`;
+    document.getElementById('dimexTransferVal').innerText = `$${dimexTransf.toLocaleString()}`;
+    document.getElementById('multivaCompradoVal').innerText = `$${multivaComp.toLocaleString()}`;
+    document.getElementById('multivaTransferVal').innerText = `$${multivaTrans.toLocaleString()}`;
+    
+    const pctCompDimex = (dimexComprado / dimexMetaComp) * 100;
+    const pctTransDimex = (dimexTransf / dimexMetaTrans) * 100;
+    const pctCompMult = (multivaComp / multivaMetaComp) * 100;
+    const pctTransMult = (multivaTrans / multivaMetaTrans) * 100;
+    
+    const fillCompDimex = document.getElementById('dimexCompradoFill');
+    fillCompDimex.style.width = `${Math.min(pctCompDimex,100)}%`;
+    fillCompDimex.innerText = `${Math.round(pctCompDimex)}%`;
+    const fillTransDimex = document.getElementById('dimexTransferFill');
+    fillTransDimex.style.width = `${Math.min(pctTransDimex,100)}%`;
+    fillTransDimex.innerText = `${Math.round(pctTransDimex)}%`;
+    
+    const fillCompMult = document.getElementById('multivaCompradoFill');
+    fillCompMult.style.width = `${Math.min(pctCompMult,100)}%`;
+    fillCompMult.innerText = `${Math.round(pctCompMult)}%`;
+    const fillTransMult = document.getElementById('multivaTransferFill');
+    fillTransMult.style.width = `${Math.min(pctTransMult,100)}%`;
+    fillTransMult.innerText = `${Math.round(pctTransMult)}%`;
+    
+    // ajuste adicional: si existen tooltips de leyenda
   })();
 </script>
 </body>
