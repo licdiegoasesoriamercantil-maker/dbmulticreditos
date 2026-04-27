@@ -326,7 +326,7 @@
     
   </div>
 
-  <!-- METAS: comprado / transferido  (DIMEX + MULTIVA) -->
+ 
   <div class="progress-row">
     <div class="progress-card">
       <div class="progress-title"><i class="fas fa-chart-simple"></i> DIMEX · Meta</div>
@@ -344,7 +344,7 @@
     </div>
   </div>
 
-  <!-- gráficos de tipificaciones (basado en CSV multiva) y gestión campaña -->
+ 
   <div class="charts-row">
     <div class="chart-card">
       <div class="chart-title"><i class="fas fa-tags"></i> Tipificaciones · Campaña Multiva (Abril)</div>
@@ -367,7 +367,7 @@
     </div>
   </div>
 
-  <!-- estatus DIMEX y Multiva resumen -->
+  
   <div class="charts-row">
     <div class="chart-card">
       <div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus DIMEX · Abril</div>
@@ -380,7 +380,7 @@
     
   </div>
 
-  <!-- Dos tablas: DIMEX actualizada + Multiva KPI -->
+ 
   <div class="bottom-row">
     <div class="table-wrapper">
       <h3><i class="fas fa-check-circle"></i> DIMEX · Abril</h3>
@@ -432,7 +432,7 @@
 
 <script>
   (function() {
-    // ==== Tipificaciones Multiva basadas en CSV (extracción de disposiciones) ====
+  
     const tipiCtx = document.getElementById('multivaTipiChart')?.getContext('2d');
     if(tipiCtx){
       new Chart(tipiCtx, {
@@ -455,7 +455,7 @@
       });
     }
 
-    // Estatus DIMEX (incluye nuevo comprado y transferido)
+    // Estatus DIMEX 
     const statusCtx = document.getElementById('abrilStatusChart')?.getContext('2d');
     if(statusCtx){
       new Chart(statusCtx, {
@@ -465,7 +465,7 @@
       });
     }
 
-    // Estatus Multiva pipeline (comprado existente + nuevos objetos)
+  
     const multivaPipeCtx = document.getElementById('multivaEstatusPipelineChart')?.getContext('2d');
     if(multivaPipeCtx){
       new Chart(multivaPipeCtx, {
@@ -475,7 +475,7 @@
       });
     }
 
-    // Acumulado créditos aprobados (Marzo 64,623 + Abr 22,578 = 87,201)
+    
     const accumCtx = document.getElementById('abrilAccumChart')?.getContext('2d');
     if(accumCtx){
       new Chart(accumCtx, {
@@ -485,8 +485,7 @@
       });
     }
 
-    // Actualizar metas en PROGRESS dinamico (con montos fijos según lo solicitado)
-    // DIMEX: comprado=100,000 / meta 800,000 => 12.5%  ; transferido=250,000 / meta 1,100,000 => 22.727%
+    
     const dimexComprado = 22578, dimexMetaComp = 100000;
     const dimexTransf = 50578, dimexMetaTrans = 250000;
     const multivaComp = 306282.00, multivaMetaComp = 600000;
@@ -516,7 +515,7 @@
     fillTransMult.style.width = `${Math.min(pctTransMult,100)}%`;
     fillTransMult.innerText = `${Math.round(pctTransMult)}%`;
     
-    // ajuste adicional: si existen tooltips de leyenda
+    
   })();
 </script>
 </body>
