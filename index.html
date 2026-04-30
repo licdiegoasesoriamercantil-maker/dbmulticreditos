@@ -359,12 +359,12 @@
   };
 
   // Tipificaciones
-  const tipiData = [261, 257, 125, 76, 61, 59, 26, 7];
+  const tipiData = [261, 257, 125, 76, 61, 59, 22, 7];
   const tipiTotal = tipiData.reduce((a,b)=>a+b,0);
   const tipiCtx = document.getElementById('multivaTipiChart')?.getContext('2d');
   if (tipiCtx) {
     new Chart(tipiCtx, {
-      type: 'bar', data: { labels: ['Cliente cuelga', 'Se corta llamada', 'No se encuentra', 'No quiere tener deudas', 'Tel equivocado', 'Cliente molesto','En proceso','Ventas'], datasets: [{ label: 'Registros', data: tipiData, backgroundColor: ['#3d7fff','#22c55e','#ef4444','#f97316','#a78bfa','#64748b'], borderRadius: 8, total: tipiTotal }] },
+      type: 'bar', data: { labels: ['Cliente cuelga', 'Se corta llamada', 'No se encuentra', 'No quiere tener deudas', 'Tel equivocado', 'Cliente molesto','Sin capacidad','Ventas'], datasets: [{ label: 'Registros', data: tipiData, backgroundColor: ['#3d7fff','#22c55e','#ef4444','#f97316','#a78bfa','#64748b'], borderRadius: 8, total: tipiTotal }] },
       options: { responsive: true, maintainAspectRatio: false, layout: { padding: { top: 20 } }, plugins: { legend: { display: false }, datalabels: { ...datalabelsConfig, formatter: (value) => { let pct = ((value / tipiTotal) * 100).toFixed(1); return `${pct}%`; } } }, scales: { x: { ticks: { color: defaults.tick, font: { size: 10 } }, grid: { color: defaults.grid } }, y: { ticks: { color: defaults.tick }, grid: { color: defaults.grid } } } }
     });
     document.getElementById('tipiTotalBadge').innerText = `Total: ${tipiTotal}`;
@@ -380,11 +380,11 @@
   }
 
   // Estatus DIMEX
-  const statusData = [2, 2, 8, 2];
+  const statusData = [3, 2, 8, 1];
   const statusTotal = statusData.reduce((a,b)=>a+b,0);
   const statusCtx = document.getElementById('abrilStatusChart')?.getContext('2d');
   if (statusCtx) {
-    new Chart(statusCtx, { type: 'doughnut', data: { labels: ['Aprobado (2)', 'Buró de Crédito (2)', 'Sin Capacidad (8)', 'En seguimiento (2)'], datasets: [{ data: statusData, backgroundColor: ['#22c55e', '#ef4444', '#3d7fff', '#f59e0b'], borderWidth: 0, total: statusTotal }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: defaults.tick, boxWidth: 10, font: { size: 10 } } }, datalabels: { ...datalabelsConfig, formatter: (value) => { let pct = ((value / statusTotal) * 100).toFixed(1); return `${pct}%`; } } }, cutout: '60%' } });
+    new Chart(statusCtx, { type: 'doughnut', data: { labels: ['Aprobado (3)', 'Buró de Crédito (2)', 'Sin Capacidad (8)', 'En seguimiento (1)'], datasets: [{ data: statusData, backgroundColor: ['#22c55e', '#ef4444', '#3d7fff', '#f59e0b'], borderWidth: 0, total: statusTotal }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right', labels: { color: defaults.tick, boxWidth: 10, font: { size: 10 } } }, datalabels: { ...datalabelsConfig, formatter: (value) => { let pct = ((value / statusTotal) * 100).toFixed(1); return `${pct}%`; } } }, cutout: '60%' } });
     document.getElementById('dimexStatusTotalBadge').innerText = `Total: ${statusTotal}`;
   }
 
