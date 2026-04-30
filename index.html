@@ -730,25 +730,20 @@
       <div class="chart-container"><canvas id="multivaTipiChart"></canvas></div>
     </div>
     <div class="chart-card">
-      <div class="chart-title"><i class="fas fa-chart-donut"></i> Gestión de Contactos · MULTIVA</div>
+      <div class="chart-title"><i class="fas fa-chart-donut"></i>PYMIO</div>
       <div class="chart-container" style="height:200px;"><canvas id="multivaGestionChart"></canvas></div>
-      <div class="legend-inline">
-        <span><span class="legend-dot" style="background:#22c55e;"></span> Cliente cuelga</span>
-        <span><span class="legend-dot" style="background:#ef4444;"></span> No le interesa</span>
-        <span><span class="legend-dot" style="background:#f97316;"></span> Molesto / sin convenio</span>
-        <span><span class="legend-dot" style="background:#64748b;"></span> Buzón/No contesta</span>
-      </div>
+      
     </div>
   </div>
 
   <!-- CHARTS ROW 2 -->
   <div class="charts-row">
     <div class="chart-card">
-      <div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus DIMEX · Abril</div>
+      <div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus DIMEX</div>
       <div class="chart-container" style="height:210px;"><canvas id="abrilStatusChart"></canvas></div>
     </div>
     <div class="chart-card">
-      <div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus Multiva Kapi (Pipeline)</div>
+      <div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus Multiva Kapi</div>
       <div class="chart-container" style="height:210px;"><canvas id="multivaEstatusPipelineChart"></canvas></div>
     </div>
   </div>
@@ -982,8 +977,8 @@
     new Chart(gestionCtx, {
       type: 'doughnut',
       data: {
-        labels: ['Cliente cuelga (42)', 'No le interesa (31)', 'Molesto/Sin conv. (23)', 'Buzón/No contesta (48)'],
-        datasets: [{ data: [42, 31, 23, 48], backgroundColor: ['#22c55e', '#ef4444', '#f97316', '#64748b'], borderWidth: 0 }]
+        labels: ['Aprobado (0)', 'Ya no contesta (8)', 'En proceso (1)', 'Espera de oferta (2)'],
+        datasets: [{ data: [0, 8, 1, 2], backgroundColor: ['#22c55e', '#ef4444', '#f97316', '#64748b'], borderWidth: 0 }]
       },
       options: {
         responsive: true, maintainAspectRatio: false,
