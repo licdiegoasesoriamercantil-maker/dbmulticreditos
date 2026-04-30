@@ -359,12 +359,12 @@
   };
 
   // Tipificaciones
-  const tipiData = [261, 257, 125, 76, 61, 59];
+  const tipiData = [261, 257, 125, 76, 61, 59, 26, 7];
   const tipiTotal = tipiData.reduce((a,b)=>a+b,0);
   const tipiCtx = document.getElementById('multivaTipiChart')?.getContext('2d');
   if (tipiCtx) {
     new Chart(tipiCtx, {
-      type: 'bar', data: { labels: ['Cliente cuelga', 'Se corta llamada', 'No se encuentra', 'No quiere tener deudas', 'Tel equivocado', 'Cliente molesto'], datasets: [{ label: 'Registros', data: tipiData, backgroundColor: ['#3d7fff','#22c55e','#ef4444','#f97316','#a78bfa','#64748b'], borderRadius: 8, total: tipiTotal }] },
+      type: 'bar', data: { labels: ['Cliente cuelga', 'Se corta llamada', 'No se encuentra', 'No quiere tener deudas', 'Tel equivocado', 'Cliente molesto','En proceso','Ventas'], datasets: [{ label: 'Registros', data: tipiData, backgroundColor: ['#3d7fff','#22c55e','#ef4444','#f97316','#a78bfa','#64748b'], borderRadius: 8, total: tipiTotal }] },
       options: { responsive: true, maintainAspectRatio: false, layout: { padding: { top: 20 } }, plugins: { legend: { display: false }, datalabels: { ...datalabelsConfig, formatter: (value) => { let pct = ((value / tipiTotal) * 100).toFixed(1); return `${pct}%`; } } }, scales: { x: { ticks: { color: defaults.tick, font: { size: 10 } }, grid: { color: defaults.grid } }, y: { ticks: { color: defaults.tick }, grid: { color: defaults.grid } } } }
     });
     document.getElementById('tipiTotalBadge').innerText = `Total: ${tipiTotal}`;
