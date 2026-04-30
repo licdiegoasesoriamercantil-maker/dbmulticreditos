@@ -7,6 +7,8 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- Chart.js DataLabels Plugin para mostrar porcentajes directamente -->
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
   <style>
     :root {
       --bg: #0b1220;
@@ -270,6 +272,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 20px;
+      position: relative;
     }
 
     .chart-title {
@@ -288,14 +291,21 @@
 
     .chart-container { position: relative; height: 230px; }
 
-    .legend-inline {
-      display: flex; flex-wrap: wrap; gap: 12px;
-      margin-top: 12px; font-size: 0.7rem; color: var(--text-2);
-    }
-
-    .legend-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      display: inline-block; margin-right: 5px;
+    /* Total badge */
+    .total-badge {
+      position: absolute;
+      bottom: 16px;
+      right: 20px;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      border-radius: 30px;
+      padding: 4px 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      border: 1px solid rgba(201,168,76,0.3);
+      z-index: 10;
+      pointer-events: none;
     }
 
     /* ── WHATSAPP SECTION ── */
@@ -332,16 +342,6 @@
     }
 
     .wa-title i { color: var(--whatsapp); }
-
-    .wa-total-badge {
-      background: var(--whatsapp-dim);
-      border: 1px solid rgba(37,211,102,0.25);
-      color: var(--whatsapp);
-      padding: 5px 14px;
-      border-radius: 40px;
-      font-size: 0.78rem;
-      font-weight: 700;
-    }
 
     .wa-stats-grid {
       display: grid;
@@ -405,124 +405,6 @@
       font-size: 0.72rem;
       color: var(--text-2);
     }
-
-    /* ── CALLS VS MESSAGES SECTION ── */
-    .cvm-section { margin-bottom: 28px; }
-
-    .cvm-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
-    }
-
-    .cvm-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-    }
-
-    .cvm-title {
-      font-weight: 700;
-      font-size: 0.92rem;
-      color: var(--text-1);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .cvm-title i { color: var(--gold); }
-
-    .effectiveness-bar {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .eff-row {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .eff-label {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.8rem;
-    }
-
-    .eff-label .name { color: var(--text-2); }
-
-    .eff-label .pct {
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: var(--text-1);
-    }
-
-    .eff-track {
-      background: rgba(255,255,255,0.06);
-      border-radius: 20px;
-      height: 8px;
-      overflow: hidden;
-    }
-
-    .eff-fill { height: 100%; border-radius: 20px; }
-
-    .metric-compare {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .mc-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 12px;
-      border-radius: var(--radius-sm);
-      background: rgba(255,255,255,0.03);
-      font-size: 0.82rem;
-    }
-
-    .mc-label { color: var(--text-2); }
-
-    .mc-values {
-      display: flex;
-      gap: 20px;
-    }
-
-    .mc-val {
-      text-align: center;
-    }
-
-    .mc-val span {
-      display: block;
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
-
-    .mc-val small {
-      font-size: 0.65rem;
-      color: var(--text-3);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .winner-tag {
-      font-size: 0.62rem;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 20px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .winner-call { background: var(--blue-dim); color: var(--blue); }
-    .winner-msg { background: var(--whatsapp-dim); color: var(--whatsapp); }
 
     /* ── TABLES ── */
     .bottom-row {
@@ -592,27 +474,10 @@
     .badge-orange { background: var(--orange-dim); color: var(--orange); }
     .badge-blue { background: var(--blue-dim); color: var(--blue); }
 
-    /* ── FOOTER ── */
-    .footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-      font-size: 0.7rem;
-      color: var(--text-3);
-    }
-
-    .footer-brand {
-      color: var(--gold);
-      font-weight: 600;
-    }
-
     /* ── RESPONSIVE ── */
     @media (max-width: 1100px) {
       .kpi-grid { grid-template-columns: repeat(2, 1fr); }
       .wa-stats-grid { grid-template-columns: repeat(3, 1fr); }
-      .cvm-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 768px) {
@@ -643,363 +508,191 @@
 <body>
 <div class="dashboard">
 
-  <!-- HEADER -->
   <div class="page-header">
-    <div class="header-left">
-      <h1>Abril 2026</h1>
-      
-    </div>
-    <div class="header-right">
-      
-    </div>
+    <div class="header-left"><h1>Abril 2026</h1></div>
   </div>
 
-  <!-- KPIs -->
   <div class="section-label">Indicadores Clave</div>
   <div class="kpi-grid">
-    <div class="kpi-card blue">
-      <div class="kpi-icon-wrap"><i class="fas fa-phone-volume"></i></div>
-      <div class="kpi-value">2,719</div>
-      <div class="kpi-label">Gestiones Totales</div>
-      <div class="kpi-sub">Llamadas</div>
-    </div>
-    <div class="kpi-card green">
-      <div class="kpi-icon-wrap"><i class="fas fa-circle-check"></i></div>
-      <div class="kpi-value">3</div>
-      <div class="kpi-label">Aprobado DIMEX</div>
-      <div class="kpi-sub">$184,687.70 desembolsado</div>
-    </div>
-    <div class="kpi-card gold">
-      <div class="kpi-icon-wrap"><i class="fas fa-building-columns"></i></div>
-      <div class="kpi-value">4</div>
-      <div class="kpi-label">Comprado MULTIVA</div>
-      <div class="kpi-sub">$306,282 comprado</div>
-    </div>
-    <div class="kpi-card blue">
-      <div class="kpi-icon-wrap"><i class="fas fa-tags"></i></div>
-      <div class="kpi-value">19</div>
-      <div class="kpi-label">Contactos Leads</div>
-      <div class="kpi-sub">73.68% Ya no contesto</div>
-    </div>
+    <div class="kpi-card blue"><div class="kpi-icon-wrap"><i class="fas fa-phone-volume"></i></div><div class="kpi-value">2,719</div><div class="kpi-label">Gestiones Totales</div><div class="kpi-sub">Llamadas</div></div>
+    <div class="kpi-card green"><div class="kpi-icon-wrap"><i class="fas fa-circle-check"></i></div><div class="kpi-value">3</div><div class="kpi-label">Aprobado DIMEX</div><div class="kpi-sub">$184,687.70 desembolsado</div></div>
+    <div class="kpi-card gold"><div class="kpi-icon-wrap"><i class="fas fa-building-columns"></i></div><div class="kpi-value">4</div><div class="kpi-label">Comprado MULTIVA</div><div class="kpi-sub">$306,282 comprado</div></div>
+    <div class="kpi-card blue"><div class="kpi-icon-wrap"><i class="fas fa-tags"></i></div><div class="kpi-value">19</div><div class="kpi-label">Contactos Leads</div><div class="kpi-sub">73.68% Ya no contesto</div></div>
   </div>
 
-  <!-- PROGRESS METAS -->
   <div class="section-label">Avance vs. Metas Mensuales</div>
   <div class="progress-row">
-    <div class="progress-card">
-      <div class="progress-title"><i class="fas fa-chart-simple"></i> DIMEX · Seguimiento de Meta</div>
-      <div class="progress-bar-label">
-        <span>✅ Comprado: <strong id="dimexCompradoVal">$184,687.70</strong></span>
-        <span>Meta: $100,000</span>
-      </div>
-      <div class="bar-track">
-        <div class="bar-fill" id="dimexCompradoFill" style="background: var(--green); width: 12.5%;"></div>
-      </div>
-      <div class="progress-bar-label">
-        <span>🔄 Transferido: <strong id="dimexTransferVal">$275,947.54</strong></span>
-        <span>Meta: $250,000</span>
-      </div>
-      <div class="bar-track">
-        <div class="bar-fill" id="dimexTransferFill" style="background: var(--blue); width: 22.7%;"></div>
-      </div>
+    <div class="progress-card"><div class="progress-title"><i class="fas fa-chart-simple"></i> DIMEX · Seguimiento de Meta</div>
+      <div class="progress-bar-label"><span>✅ Comprado: <strong id="dimexCompradoVal">$184,687.70</strong></span><span>Meta: $100,000</span></div>
+      <div class="bar-track"><div class="bar-fill" id="dimexCompradoFill" style="background: var(--green); width: 0%;"></div></div>
+      <div class="progress-bar-label"><span>🔄 Transferido: <strong id="dimexTransferVal">$275,947.54</strong></span><span>Meta: $250,000</span></div>
+      <div class="bar-track"><div class="bar-fill" id="dimexTransferFill" style="background: var(--blue); width: 0%;"></div></div>
     </div>
-    <div class="progress-card">
-      <div class="progress-title"><i class="fas fa-building-columns"></i> MULTIVA KAPI · Seguimiento de Meta</div>
-      <div class="progress-bar-label">
-        <span>✅ Comprado: <strong id="multivaCompradoVal">$306,282</strong></span>
-        <span>Meta: $600,000</span>
-      </div>
-      <div class="bar-track">
-        <div class="bar-fill" id="multivaCompradoFill" style="background: var(--green); width: 40%;"></div>
-      </div>
-      <div class="progress-bar-label">
-        <span>🔄 Transferido: <strong id="multivaTransferVal">$491,382.80</strong></span>
-        <span>Meta: $1,000,000</span>
-      </div>
-      <div class="bar-track">
-        <div class="bar-fill" id="multivaTransferFill" style="background: var(--blue); width: 45%;"></div>
-      </div>
+    <div class="progress-card"><div class="progress-title"><i class="fas fa-building-columns"></i> MULTIVA KAPI · Seguimiento de Meta</div>
+      <div class="progress-bar-label"><span>✅ Comprado: <strong id="multivaCompradoVal">$306,282</strong></span><span>Meta: $600,000</span></div>
+      <div class="bar-track"><div class="bar-fill" id="multivaCompradoFill" style="background: var(--green); width: 0%;"></div></div>
+      <div class="progress-bar-label"><span>🔄 Transferido: <strong id="multivaTransferVal">$491,382.80</strong></span><span>Meta: $1,000,000</span></div>
+      <div class="bar-track"><div class="bar-fill" id="multivaTransferFill" style="background: var(--blue); width: 0%;"></div></div>
     </div>
   </div>
 
-  <!-- CHARTS ROW 1 -->
   <div class="section-label">Tipificación y Gestión de Contactos</div>
   <div class="charts-row">
-    <div class="chart-card">
-      <div class="chart-title"><i class="fas fa-tags"></i> Tipificaciones · Campaña Multiva (Abril)</div>
-      <div class="chart-container"><canvas id="multivaTipiChart"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title"><i class="fas fa-chart-donut"></i>PYMIO</div>
-      <div class="chart-container" style="height:200px;"><canvas id="multivaGestionChart"></canvas></div>
-      
-    </div>
+    <div class="chart-card"><div class="chart-title"><i class="fas fa-tags"></i> Tipificaciones · Campaña Multiva (Abril)</div><div class="chart-container"><canvas id="multivaTipiChart"></canvas></div><div class="total-badge" id="tipiTotalBadge">Total: 0</div></div>
+    <div class="chart-card"><div class="chart-title"><i class="fas fa-chart-donut"></i> Gestión Contactos · PYMIO</div><div class="chart-container" style="height:200px;"><canvas id="multivaGestionChart"></canvas></div><div class="total-badge" id="gestionTotalBadge">Total: 0</div></div>
   </div>
 
-  <!-- CHARTS ROW 2 -->
   <div class="charts-row">
-    <div class="chart-card">
-      <div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus DIMEX</div>
-      <div class="chart-container" style="height:210px;"><canvas id="abrilStatusChart"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus Multiva Kapi</div>
-      <div class="chart-container" style="height:210px;"><canvas id="multivaEstatusPipelineChart"></canvas></div>
-    </div>
+    <div class="chart-card"><div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus DIMEX · Abril</div><div class="chart-container" style="height:210px;"><canvas id="abrilStatusChart"></canvas></div><div class="total-badge" id="dimexStatusTotalBadge">Total: 0</div></div>
+    <div class="chart-card"><div class="chart-title"><i class="fas fa-chart-pie"></i> Estatus Multiva Kapi · Pipeline</div><div class="chart-container" style="height:210px;"><canvas id="multivaEstatusPipelineChart"></canvas></div><div class="total-badge" id="multivaPipeTotalBadge">Total: 0</div></div>
   </div>
 
-  <!-- ══════════════════════════════════════════
-       NUEVA SECCIÓN: WHATSAPP
-  ══════════════════════════════════════════ -->
   <div class="section-label">Contactos WhatsApp · Abril 2026</div>
   <div class="whatsapp-section">
     <div class="whatsapp-card">
-      <div class="wa-header">
-        <div class="wa-title">
-          <i class="fab fa-whatsapp" style="font-size:1.2rem;"></i>
-          Resumen de Contactos vía WhatsApp
-        </div>
-        
-      </div>
-
-      <!-- Stats rápidas -->
+      <div class="wa-header"><div class="wa-title"><i class="fab fa-whatsapp" style="font-size:1.2rem;"></i>Resumen de Contactos vía WhatsApp</div></div>
       <div class="wa-stats-grid">
-        <div class="wa-stat">
-          <div class="wa-stat-val" style="color: var(--whatsapp);">850</div>
-          <div class="wa-stat-lbl">Mensajes enviados</div>
-        </div>
-        <div class="wa-stat">
-          <div class="wa-stat-val" style="color: var(--blue);">560</div>
-          <div class="wa-stat-lbl">Mensajes leídos (65.8%)</div>
-        </div>
-        <div class="wa-stat">
-          <div class="wa-stat-val" style="color: var(--green);">46</div>
-          <div class="wa-stat-lbl">Respondieron (5.4%)</div>
-        </div>
-        <div class="wa-stat">
-          <div class="wa-stat-val" style="color: var(--gold);">21</div>
-          <div class="wa-stat-lbl">Interés activo (2.4%)</div>
-        </div>
-        <div class="wa-stat">
-          <div class="wa-stat-val" style="color: var(--red);">25</div>
-          <div class="wa-stat-lbl">Rechazados / No interesa (2.9%)</div>
-        </div>
+        <div class="wa-stat"><div class="wa-stat-val" style="color: var(--whatsapp);">850</div><div class="wa-stat-lbl">Mensajes enviados</div></div>
+        <div class="wa-stat"><div class="wa-stat-val" style="color: var(--blue);">560</div><div class="wa-stat-lbl">Mensajes leídos (65.8%)</div></div>
+        <div class="wa-stat"><div class="wa-stat-val" style="color: var(--green);">46</div><div class="wa-stat-lbl">Respondieron (5.4%)</div></div>
+        <div class="wa-stat"><div class="wa-stat-val" style="color: var(--gold);">21</div><div class="wa-stat-lbl">Interés activo (2.4%)</div></div>
+        <div class="wa-stat"><div class="wa-stat-val" style="color: var(--red);">25</div><div class="wa-stat-lbl">Rechazados / No interesa (2.9%)</div></div>
       </div>
-
-      <!-- Insights cualitativos -->
-      <div class="wa-insight-row">
-        <div class="wa-insight">
-          <div class="wa-insight-icon" style="background: var(--whatsapp-dim); color: var(--whatsapp);">
-            <i class="fas fa-clock"></i>
-          </div>
-          <div class="wa-insight-text">
-            <strong>Mejor horario de respuesta</strong>
-            <span>10 a.m a 12 p.m</span>
-          </div>
-        </div>
-        
-      </div>
+      <div class="wa-insight-row"><div class="wa-insight"><div class="wa-insight-icon" style="background: var(--whatsapp-dim); color: var(--whatsapp);"><i class="fas fa-clock"></i></div><div class="wa-insight-text"><strong>Mejor horario de respuesta</strong><span>10 a.m a 12 p.m</span></div></div></div>
     </div>
   </div>
 
- 
-      
-
-   
-
-  <!-- TABLAS -->
   <div class="section-label">Detalle de Pipeline</div>
   <div class="bottom-row">
-    <div class="table-card">
-      <h3><i class="fas fa-circle-check"></i> DIMEX · Abril</h3>
-      <div style="overflow-x: auto;">
-        <table>
-          <thead>
-            <tr>
-              <th>Cliente / Concepto</th>
-              <th>Monto</th>
-              <th>Estatus</th>
-              <th>Comentario</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td style="color:var(--text-1);">RUBEN CHANON RAMIREZ</td><td style="color:var(--green);">$22,578</td><td><span class="badge badge-green">Aprobado</span></td><td>—</td></tr>
-            <tr><td style="color:var(--text-1);">MARIA DE LA LUZ PEREZ JIMENEZ</td><td style="color:var(--green);">$100,000</td><td><span class="badge badge-green">Aprobado</span></td><td>—</td></tr>
-            <tr><td style="color:var(--text-1);">FAUSTINO DE LA RIVA PEREZ</td><td style="color:var(--green);">$62,109.68</td><td><span class="badge badge-green">Aprobado</span></td><td>—</td></tr>
-            <tr><td>JUAREZ CASTRO GERMAN</td><td>$28,000</td><td><span class="badge badge-gray">Buró de crédito</span></td><td>Rechazo en Oli</td></tr>
-            <tr><td>VICTOR MOLINA LICEA</td><td>$0</td><td><span class="badge badge-gray">Sin capacidad</span></td><td>Sobreendeudamiento</td></tr>
-            <tr><td>CIRILO ZAMORA SANTOS</td><td>$0</td><td><span class="badge badge-gray">Sin capacidad</span></td><td>Atraso con DIMEX</td></tr>
-            <tr><td>SONIA MARTINEZ PEON</td><td>$0</td><td><span class="badge badge-gray">Sin capacidad</span></td><td>Atraso con DIMEX</td></tr>
-            <tr><td>GERARDO MORALES APOLINAR</td><td>$0</td><td><span class="badge badge-gray">Sin capacidad</span></td><td>Atraso con DIMEX</td></tr>
-            <tr><td>PEDRO MONTES DE OCA</td><td>$0</td><td><span class="badge badge-gray">Sin capacidad</span></td><td>Sin capacidad</td></tr>
-            <tr><td>HERMELINDO RAMIREZ ALDANA</td><td>$0</td><td><span class="badge badge-gray">Sin capacidad</span></td><td>Atraso con DIMEX</td></tr>
-            <tr><td>ALICIA DEL CARMEN TORRES PEREZ</td><td>$0</td><td><span class="badge badge-gray">Sin capacidad</span></td><td>Atraso con DIMEX</td></tr>
-            <tr><td>JOSE SIPRIANO MORALES MONTER</td><td>$63,259.86</td><td><span class="badge badge-gray">En seguimiento</span></td><td>En espera de estados de cuenta</td></tr>
-            <tr><td>MARISOL CASTILLO LUNA</td><td>$0</td><td><span class="badge badge-gray">Buro de crédto</span></td><td>Atraso con DIMEX</td></tr>
-            <tr><td>Enrique González</td><td>$0</td><td><span class="badge badge-gray">Sin capacidad</span></td><td>Recibe pensión en banco azteca</td></tr>
-            
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="table-card">
-      <h3><i class="fas fa-building-columns"></i> Multiva Kapi</h3>
-      <div style="overflow-x: auto;">
-        <table>
-          <thead>
-            <tr><th>Cliente</th><th>Monto</th><th>Estatus</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>López Sevillano Andrés</td><td>$8,400</td><td><span class="badge badge-orange">Sin Capacidad</span></td></tr>
-            <tr><td>Flores Jáquez Francisco</td><td>$12,900</td><td><span class="badge badge-red">Cancelado</span></td></tr>
-            <tr><td>Gallardo Hdz. Victorino</td><td>$10,000</td><td><span class="badge badge-red">Cancelado</span></td></tr>
-            <tr><td>López Herrejón Jorge R.</td><td>$10,000</td><td><span class="badge badge-red">Cancelado</span></td></tr>
-            <tr><td>Aldana Contreras Manuel</td><td style="color:var(--green);">$18,733</td><td><span class="badge badge-green">Comprada</span></td></tr>
-            <tr><td>Ignacio Mendoza Delgado</td><td style="color:var(--green);">$188,546</td><td><span class="badge badge-green">Comprada</span></td></tr>
-            <tr><td>César Pérez Calderón</td><td style="color:var(--green);">$11,381</td><td><span class="badge badge-green">Comprada</span></td></tr>
-            <tr><td>Elvira Almaraz del Río</td><td style="color:var(--green);">$87,622</td><td><span class="badge badge-green">Comprada</span></td></tr>
-            <tr><td>Virginia Fraga Fuentes</td><td>$22,445</td><td><span class="badge badge-blue">Espera de contrato</span></td></tr>
-            <tr><td>Alicia Torres Perez</td><td>$3,940.87</td><td><span class="badge badge-orange">Sin capacidad</span></td></tr>
-            <tr><td>Raymundo Delgado Garcia</td><td>$9,138.12</td><td><span class="badge badge-orange">Sin Capacidad</span></td></tr>
-            <tr><td>Pedro Armando Diaz Ortiz</td><td style="color:var(--red);">-$557</td><td><span class="badge badge-orange">Sin Capacidad</span></td></tr>
-            <tr><td>Pedro Montes De Oca Jim.</td><td>$2,517.28</td><td><span class="badge badge-orange">Sin Capacidad</span></td></tr>
-            <tr><td>Millan Ruiz Araceli</td><td>$0</td><td><span class="badge badge-orange">Sin Capacidad</span></td></tr>
-            <tr><td>Marisol Castillo Luna</td><td>$0</td><td><span class="badge badge-orange">Sin Capacidad</span></td></tr>
-            <tr><td>Josefina Morales Salinas</td><td>$22,301.38</td><td><span class="badge badge-blue">En proceso</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-     <div class="table-card">
-      <h3><i class="fas fa-building-columns"></i> PYMIO</h3>
-      <div style="overflow-x: auto;">
-        <table>
-          <thead>
-            <tr><th>Cliente</th><th>Monto</th><th>Estatus</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>JOSE</td><td>$0</td><td><span class="badge badge-red">YA NO CONTESTA</span></td></tr>
-            <tr><td>VIOLETA</td><td>$1,000,000</td><td><span class="badge badge-blue">EN PROCESO</span></td></tr>
-            <tr><td>MANUEL</td><td>$0</td><td><span class="badge badge-red">YA NO CONTESTA</span></td></tr>
-           <tr><td>ROBERTO</td><td>$0</td><td><span class="badge badge-red">YA NO CONTESTA</span></td></tr>
-            <tr><td>ALVARO JAVIER BALAM CATZIN</td><td>$0</td><td><span class="badge badge-red">YA NO CONTESTA</span></td></tr>
-            <tr><td>DANIEL JACOBO</td><td>$1,500,000</td><td><span class="badge badge-blue">ESPERA DE OFERTA</span></td></tr>
-            <tr><td>MARIA DE LA CRUZ PEREZ JIMENEZ</td><td>$200,000</td><td><span class="badge badge-blue">ESPERA DE OFERTA</span></td></tr>
-            <tr><td>HUGO</td><td>$0</td><td><span class="badge badge-red">YA NO CONTESTA</span></td></tr>
-           <tr><td>ALEJANDRO GARCIA</td><td>$0</td><td><span class="badge badge-red">YA NO CONTESTA</span></td></tr>
-            <tr><td>MAURICIO BLANCO</td><td>$0</td><td><span class="badge badge-red">YA NO CONTESTA</span></td></tr>
-           <tr><td>MOISES</td><td>$0</td><td><span class="badge badge-red">YA NO CONTESTA</span></td></tr>
-            
-            
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <div class="table-card"><h3><i class="fas fa-circle-check"></i> DIMEX · Abril</h3><div style="overflow-x: auto;"><table><thead><tr><th>Cliente / Concepto</th><th>Monto</th><th>Estatus</th><th>Comentario</th></tr></thead><tbody><tr><td style="color:var(--text-1);">RUBEN CHANON RAMIREZ</td><td style="color:var(--green);">$22,578</td><td><span class="badge badge-green">Aprobado</span></td><td>—</td></tr><tr><td style="color:var(--text-1);">MARIA DE LA LUZ PEREZ JIMENEZ</td><td style="color:var(--green);">$100,000</td><td><span class="badge badge-green">Aprobado</span></td><td>—</td></tr><tr><td style="color:var(--text-1);">FAUSTINO DE LA RIVA PEREZ</td><td style="color:var(--green);">$62,109.68</td><td><span class="badge badge-green">Aprobado</span></td><td>—</td></tr><tr><td>JUAREZ CASTRO GERMAN</td><td>$28,000</td><td><span class="badge badge-gray">Buró de crédito</span></td><td>Rechazo en Oli</td></tr><tr><td>VICTOR MOLINA LICEA</td><td>$0</td><td><span class="badge badge-gray">Sin capacidad</span></td><td>Sobreendeudamiento</td></tr><tr><td>CIRILO ZAMORA SANTOS</td><td>$0</td><td><span class="badge badge-gray">Sin capacidad</span></td><td>Atraso con DIMEX</td></tr><tr><td>SONIA MARTINEZ PEON</td><td>$0</td><td><span class="badge badge-gray">Sin capacidad</span></td><td>Atraso con DIMEX</td></tr><tr><td>GERARDO MORALES APOLINAR</td><td>$0</td><td><span class="badge badge-gray">Sin capacidad</span></td><td>Atraso con DIMEX</td></tr><tr><td>PEDRO MONTES DE OCA</td><td>$0</td><td><span class="badge badge-gray">Sin capacidad</span></td><td>Sin capacidad</td></tr><tr><td>HERMELINDO RAMIREZ ALDANA</td><td>$0</td><td><span class="badge badge-gray">Sin capacidad</span></td><td>Atraso con DIMEX</td></tr><tr><td>ALICIA DEL CARMEN TORRES PEREZ</td><td>$0</td><td><span class="badge badge-gray">Sin capacidad</span></td><td>Atraso con DIMEX</td></tr><tr><td>JOSE SIPRIANO MORALES MONTER</td><td>$63,259.86</td><td><span class="badge badge-gray">En seguimiento</span></td><td>En espera de estados de cuenta</td></tr><tr><td>MARISOL CASTILLO LUNA</td><td>$0</td><td><span class="badge badge-gray">Buro de crédto</span></td><td>Atraso con DIMEX</td></tr><tr><td>Enrique González</td><td>$0</td><td><span class="badge badge-gray">Sin capacidad</span></td><td>Recibe pensión en banco azteca</td></tr></tbody></table></div></div>
+    <div class="table-card"><h3><i class="fas fa-building-columns"></i> Multiva Kapi</h3><div style="overflow-x: auto;"><table><thead><tr><th>Cliente</th><th>Monto</th><th>Estatus</th></tr></thead><tbody><tr><td>López Sevillano Andrés</td><td>$8,400</td><td><span class="badge badge-orange">Sin Capacidad</span></td></tr><tr><td>Flores Jáquez Francisco</td><td>$12,900</td><td><span class="badge badge-red">Cancelado</span></td></tr><tr><td>Gallardo Hdz. Victorino</td><td>$10,000</td><td><span class="badge badge-red">Cancelado</span></td></tr><tr><td>López Herrejón Jorge R.</td><td>$10,000</td><td><span class="badge badge-red">Cancelado</span></td></tr><tr><td>Aldana Contreras Manuel</td><td style="color:var(--green);">$18,733</td><td><span class="badge badge-green">Comprada</span></td></tr><tr><td>Ignacio Mendoza Delgado</td><td style="color:var(--green);">$188,546</td><td><span class="badge badge-green">Comprada</span></td></tr><tr><td>César Pérez Calderón</td><td style="color:var(--green);">$11,381</td><td><span class="badge badge-green">Comprada</span></td></tr><tr><td>Elvira Almaraz del Río</td><td style="color:var(--green);">$87,622</td><td><span class="badge badge-green">Comprada</span></td></tr><tr><td>Virginia Fraga Fuentes</td><td>$22,445</td><td><span class="badge badge-blue">Espera de contrato</span></td></tr><tr><td>Alicia Torres Perez</td><td>$3,940.87</td><td><span class="badge badge-orange">Sin capacidad</span></td></tr><tr><td>Raymundo Delgado Garcia</td><td>$9,138.12</td><td><span class="badge badge-orange">Sin Capacidad</span></td></tr><tr><td>Pedro Armando Diaz Ortiz</td><td style="color:var(--red);">-$557</td><td><span class="badge badge-orange">Sin Capacidad</span></td></tr><tr><td>Pedro Montes De Oca Jim.</td><td>$2,517.28</td><td><span class="badge badge-orange">Sin Capacidad</span></td></tr><tr><td>Millan Ruiz Araceli</td><td>$0</td><td><span class="badge badge-orange">Sin Capacidad</span></td></tr><tr><td>Marisol Castillo Luna</td><td>$0</td><td><span class="badge badge-orange">Sin Capacidad</span></td></tr><tr><td>Josefina Morales Salinas</td><td>$22,301.38</td><td><span class="badge badge-blue">En proceso</span></td></tr></tbody></table></div></div>
+    <div class="table-card"><h3><i class="fas fa-building-columns"></i> PYMIO</h3><div style="overflow-x: auto;"><table><thead><tr><th>Cliente</th><th>Monto</th><th>Estatus</th></tr></thead><tbody><tr><td>JOSE</td><td>$0</td><td><span class="badge badge-red">YA NO CONTESTA</span></td></tr><tr><td>VIOLETA</td><td>$1,000,000</td><td><span class="badge badge-blue">EN PROCESO</span></td></tr><tr><td>MANUEL</td><td>$0</td><td><span class="badge badge-red">YA NO CONTESTA</span></td></tr><tr><td>ROBERTO</td><td>$0</td><td><span class="badge badge-red">YA NO CONTESTA</span></td></tr><tr><td>ALVARO JAVIER BALAM CATZIN</td><td>$0</td><td><span class="badge badge-red">YA NO CONTESTA</span></td></tr><tr><td>DANIEL JACOBO</td><td>$1,500,000</td><td><span class="badge badge-blue">ESPERA DE OFERTA</span></td></tr><tr><td>MARIA DE LA CRUZ PEREZ JIMENEZ</td><td>$200,000</td><td><span class="badge badge-blue">ESPERA DE OFERTA</span></td></tr><tr><td>HUGO</td><td>$0</td><td><span class="badge badge-red">YA NO CONTESTA</span></td></tr><tr><td>ALEJANDRO GARCIA</td><td>$0</td><td><span class="badge badge-red">YA NO CONTESTA</span></td></tr><tr><td>MAURICIO BLANCO</td><td>$0</td><td><span class="badge badge-red">YA NO CONTESTA</span></td></tr><tr><td>MOISES</td><td>$0</td><td><span class="badge badge-red">YA NO CONTESTA</span></td></tr></tbody></table></div></div>
   </div>
-
-  <!-- FOOTER -->
- 
-
 </div>
 
 <script>
 (function () {
-  const defaults = {
-    color: 'rgba(240,244,255,0.85)',
-    grid: 'rgba(255,255,255,0.06)',
-    tick: 'rgba(141,160,187,0.8)'
+  Chart.register(ChartDataLabels);
+  
+  const defaults = { color: 'rgba(240,244,255,0.85)', grid: 'rgba(255,255,255,0.06)', tick: 'rgba(141,160,187,0.8)' };
+  
+  // Configuración global para datalabels (porcentajes visibles)
+  const datalabelsConfig = {
+    color: 'white',
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    borderRadius: 12,
+    padding: { left: 6, right: 6, top: 3, bottom: 3 },
+    font: { weight: 'bold', size: 11 },
+    formatter: (value, context) => {
+      const total = context.dataset.total || context.chart.data.datasets[0].data.reduce((a,b)=>a+b,0);
+      if (total === 0) return '0%';
+      const percentage = ((value / total) * 100).toFixed(1);
+      return `${percentage}%`;
+    },
+    align: 'center',
+    anchor: 'center',
+    offset: 0
   };
 
-  // ── Tipificaciones (bar) ──
+  // 1. Bar chart: Tipificaciones
+  const tipiData = [48, 42, 31, 23, 27, 14];
+  const tipiTotal = tipiData.reduce((a,b)=>a+b,0);
   const tipiCtx = document.getElementById('multivaTipiChart')?.getContext('2d');
   if (tipiCtx) {
     new Chart(tipiCtx, {
       type: 'bar',
       data: {
         labels: ['No contesta/Buzón', 'Cliente cuelga', 'No le interesa', 'Molesto/Sin conv.', 'No quiere deudas', 'Otro medio'],
-        datasets: [{
-          label: 'Registros',
-          data: [48, 42, 31, 23, 27, 14],
+        datasets: [{ 
+          label: 'Registros', 
+          data: tipiData, 
           backgroundColor: ['#3d7fff','#22c55e','#ef4444','#f97316','#a78bfa','#64748b'],
           borderRadius: 8,
-          borderSkipped: false
+          total: tipiTotal
         }]
       },
       options: {
         responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: {
-          x: { ticks: { color: defaults.tick, font: { size: 10 } }, grid: { color: defaults.grid } },
-          y: { ticks: { color: defaults.tick }, grid: { color: defaults.grid } }
-        }
+        layout: { padding: { top: 20 } },
+        plugins: { 
+          legend: { display: false },
+          datalabels: { ...datalabelsConfig, formatter: (value) => { let pct = ((value / tipiTotal) * 100).toFixed(1); return `${pct}%`; } }
+        },
+        scales: { x: { ticks: { color: defaults.tick, font: { size: 10 } }, grid: { color: defaults.grid } }, y: { ticks: { color: defaults.tick }, grid: { color: defaults.grid } } }
       }
     });
+    document.getElementById('tipiTotalBadge').innerText = `Total: ${tipiTotal}`;
   }
 
-  // ── Gestión contactos (donut) ──
+  // 2. Doughnut: Gestión PYMIO
+  const gestionData = [0, 8, 1, 2];
+  const gestionTotal = gestionData.reduce((a,b)=>a+b,0);
+  const gestionLabels = ['Aprobado (0)', 'Ya no contesta (8)', 'En proceso (1)', 'Espera de oferta (2)'];
   const gestionCtx = document.getElementById('multivaGestionChart')?.getContext('2d');
   if (gestionCtx) {
     new Chart(gestionCtx, {
       type: 'doughnut',
-      data: {
-        labels: ['Aprobado (0)', 'Ya no contesta (1)', 'Ya no contesta (8)', 'Espera de oferta (2)'],
-        datasets: [{ data: [0, 1, 8, 2], backgroundColor: ['#22c55e', '#ef4444', '#f97316', '#64748b'], borderWidth: 0 }]
-      },
+      data: { labels: gestionLabels, datasets: [{ data: gestionData, backgroundColor: ['#22c55e', '#ef4444', '#f97316', '#64748b'], borderWidth: 0, total: gestionTotal }] },
       options: {
         responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: 'right', labels: { color: defaults.tick, boxWidth: 10, font: { size: 10 } } } },
+        plugins: { 
+          legend: { position: 'right', labels: { color: defaults.tick, boxWidth: 10, font: { size: 10 } } },
+          datalabels: { ...datalabelsConfig, formatter: (value, ctx) => { let total = gestionTotal; let pct = ((value / total) * 100).toFixed(1); return `${pct}%`; } }
+        },
         cutout: '60%'
       }
     });
+    document.getElementById('gestionTotalBadge').innerText = `Total: ${gestionTotal}`;
   }
 
-  // ── Estatus DIMEX (donut) ──
+  // 3. Doughnut: Estatus DIMEX
+  const statusData = [2, 2, 8, 2];
+  const statusTotal = statusData.reduce((a,b)=>a+b,0);
   const statusCtx = document.getElementById('abrilStatusChart')?.getContext('2d');
   if (statusCtx) {
     new Chart(statusCtx, {
       type: 'doughnut',
-      data: {
-        labels: ['Aprobado (2)', 'Buró de Crédito (2)', 'Sin Capacidad (8)', 'En seguimiento (2)'],
-        datasets: [{ data: [2, 2, 8, 2], backgroundColor: ['#22c55e', '#ef4444', '#3d7fff', '#f59e0b'], borderWidth: 0 }]
-      },
+      data: { labels: ['Aprobado (2)', 'Buró de Crédito (2)', 'Sin Capacidad (8)', 'En seguimiento (2)'], datasets: [{ data: statusData, backgroundColor: ['#22c55e', '#ef4444', '#3d7fff', '#f59e0b'], borderWidth: 0, total: statusTotal }] },
       options: {
         responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: 'right', labels: { color: defaults.tick, boxWidth: 10, font: { size: 10 } } } },
+        plugins: { 
+          legend: { position: 'right', labels: { color: defaults.tick, boxWidth: 10, font: { size: 10 } } },
+          datalabels: { ...datalabelsConfig, formatter: (value) => { let pct = ((value / statusTotal) * 100).toFixed(1); return `${pct}%`; } }
+        },
         cutout: '60%'
       }
     });
+    document.getElementById('dimexStatusTotalBadge').innerText = `Total: ${statusTotal}`;
   }
 
-  // ── Estatus Multiva Pipeline (donut) ──
+  // 4. Doughnut: Estatus Multiva Pipeline
+  const pipeData = [4, 2, 7, 3];
+  const pipeTotal = pipeData.reduce((a,b)=>a+b,0);
   const multivaPipeCtx = document.getElementById('multivaEstatusPipelineChart')?.getContext('2d');
   if (multivaPipeCtx) {
     new Chart(multivaPipeCtx, {
       type: 'doughnut',
-      data: {
-        labels: ['Comprado (4)', 'En proceso (2)', 'Sin capacidad (7)', 'Cancelado (3)'],
-        datasets: [{ data: [4, 2, 7, 3], backgroundColor: ['#22c55e', '#3d7fff', '#f59e0b', '#ef4444'], borderWidth: 0 }]
-      },
+      data: { labels: ['Comprado (4)', 'En proceso (2)', 'Sin capacidad (7)', 'Cancelado (3)'], datasets: [{ data: pipeData, backgroundColor: ['#22c55e', '#3d7fff', '#f59e0b', '#ef4444'], borderWidth: 0, total: pipeTotal }] },
       options: {
         responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: 'right', labels: { color: defaults.tick, boxWidth: 10, font: { size: 10 } } } },
+        plugins: { 
+          legend: { position: 'right', labels: { color: defaults.tick, boxWidth: 10, font: { size: 10 } } },
+          datalabels: { ...datalabelsConfig, formatter: (value) => { let pct = ((value / pipeTotal) * 100).toFixed(1); return `${pct}%`; } }
+        },
         cutout: '60%'
       }
     });
+    document.getElementById('multivaPipeTotalBadge').innerText = `Total: ${pipeTotal}`;
   }
 
-  // ── Progress bars ──
+  // Progress bars
   const data = {
     dimexComp: 184687.70, dimexMetaComp: 100000,
     dimexTrans: 275947.54, dimexMetaTrans: 250000,
     multComp: 306282, multMetaComp: 600000,
     multTrans: 491382.80, multMetaTrans: 1000000
   };
-
-  function setPct(fillId, val, meta) {
-    const el = document.getElementById(fillId);
-    if (el) el.style.width = Math.min((val / meta) * 100, 100) + '%';
-  }
-
+  function setPct(fillId, val, meta) { const el = document.getElementById(fillId); if (el) el.style.width = Math.min((val / meta) * 100, 100) + '%'; }
   setPct('dimexCompradoFill', data.dimexComp, data.dimexMetaComp);
   setPct('dimexTransferFill', data.dimexTrans, data.dimexMetaTrans);
   setPct('multivaCompradoFill', data.multComp, data.multMetaComp);
