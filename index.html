@@ -659,9 +659,9 @@
   <div class="kpi-grid">
     <div class="kpi-card blue">
       <div class="kpi-icon-wrap"><i class="fas fa-phone-volume"></i></div>
-      <div class="kpi-value">1,975</div>
-      <div class="kpi-label">Gestiones Totales (Abril)</div>
-      <div class="kpi-sub">Llamadas + Mensajes</div>
+      <div class="kpi-value">2,119</div>
+      <div class="kpi-label">Gestiones Totales</div>
+      <div class="kpi-sub">Llamadas</div>
     </div>
     <div class="kpi-card green">
       <div class="kpi-icon-wrap"><i class="fas fa-circle-check"></i></div>
@@ -675,7 +675,13 @@
       <div class="kpi-label">Comprado MULTIVA</div>
       <div class="kpi-sub">$306,282 comprado</div>
     </div>
-    
+    <div class="kpi-grid">
+    <div class="kpi-card blue">
+      <div class="kpi-icon-wrap"><i class="fas fa-tags"></i></div>
+      <div class="kpi-value">19</div>
+      <div class="kpi-label">Contactos Leads/div>
+      <div class="kpi-sub">73.68% Ya no contesto</div>
+    </div>
   </div>
 
   <!-- PROGRESS METAS -->
@@ -684,14 +690,14 @@
     <div class="progress-card">
       <div class="progress-title"><i class="fas fa-chart-simple"></i> DIMEX · Seguimiento de Meta</div>
       <div class="progress-bar-label">
-        <span>✅ Comprado: <strong id="dimexCompradoVal">$22,578</strong></span>
+        <span>✅ Comprado: <strong id="dimexCompradoVal">$122,578</strong></span>
         <span>Meta: $100,000</span>
       </div>
       <div class="bar-track">
         <div class="bar-fill" id="dimexCompradoFill" style="background: var(--green); width: 12.5%;"></div>
       </div>
       <div class="progress-bar-label">
-        <span>🔄 Transferido: <strong id="dimexTransferVal">$50,578</strong></span>
+        <span>🔄 Transferido: <strong id="dimexTransferVal">$275,947.54</strong></span>
         <span>Meta: $250,000</span>
       </div>
       <div class="bar-track">
@@ -708,7 +714,7 @@
         <div class="bar-fill" id="multivaCompradoFill" style="background: var(--green); width: 40%;"></div>
       </div>
       <div class="progress-bar-label">
-        <span>🔄 Transferido: <strong id="multivaTransferVal">$381,590</strong></span>
+        <span>🔄 Transferido: <strong id="multivaTransferVal">$403,891.53</strong></span>
         <span>Meta: $900,000</span>
       </div>
       <div class="bar-track">
@@ -765,24 +771,24 @@
       <!-- Stats rápidas -->
       <div class="wa-stats-grid">
         <div class="wa-stat">
-          <div class="wa-stat-val" style="color: var(--whatsapp);">487</div>
-          <div class="wa-stat-lbl">Contactos únicos enviados</div>
+          <div class="wa-stat-val" style="color: var(--whatsapp);">850</div>
+          <div class="wa-stat-lbl">Mensajes enviados</div>
         </div>
         <div class="wa-stat">
-          <div class="wa-stat-val" style="color: var(--blue);">319</div>
-          <div class="wa-stat-lbl">Mensajes leídos (65.5%)</div>
+          <div class="wa-stat-val" style="color: var(--blue);">560</div>
+          <div class="wa-stat-lbl">Mensajes leídos (65.8%)</div>
         </div>
         <div class="wa-stat">
-          <div class="wa-stat-val" style="color: var(--green);">87</div>
-          <div class="wa-stat-lbl">Respondieron (17.8%)</div>
+          <div class="wa-stat-val" style="color: var(--green);">36</div>
+          <div class="wa-stat-lbl">Respondieron (4.2%)</div>
         </div>
         <div class="wa-stat">
-          <div class="wa-stat-val" style="color: var(--gold);">23</div>
-          <div class="wa-stat-lbl">Interés activo (4.7%)</div>
+          <div class="wa-stat-val" style="color: var(--gold);">21</div>
+          <div class="wa-stat-lbl">Interés activo (2.4%)</div>
         </div>
         <div class="wa-stat">
-          <div class="wa-stat-val" style="color: var(--red);">46</div>
-          <div class="wa-stat-lbl">Rechazados / No interesa</div>
+          <div class="wa-stat-val" style="color: var(--red);">25</div>
+          <div class="wa-stat-lbl">Rechazados / No interesa (2.9%)</div>
         </div>
       </div>
 
@@ -794,7 +800,7 @@
           </div>
           <div class="wa-insight-text">
             <strong>Mejor horario de respuesta</strong>
-            <span></span>
+            <span>10 a.m a 12 p.m</span>
           </div>
         </div>
         
@@ -992,10 +998,10 @@
 
   // ── Progress bars ──
   const data = {
-    dimexComp: 22578, dimexMetaComp: 100000,
-    dimexTrans: 50578, dimexMetaTrans: 250000,
+    dimexComp: 122578, dimexMetaComp: 100000,
+    dimexTrans: 275947.54, dimexMetaTrans: 250000,
     multComp: 306282, multMetaComp: 600000,
-    multTrans: 381590.01, multMetaTrans: 900000
+    multTrans: 403891.53, multMetaTrans: 900000
   };
 
   function setPct(fillId, val, meta) {
