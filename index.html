@@ -324,7 +324,7 @@
       <div class="kpi-grid">
         <div class="kpi-card" data-color="blue"><div class="kpi-top"><div class="kpi-icon blue"><i class="fas fa-phone-volume"></i></div><div class="kpi-label-top">Llamadas realizadas</div></div><div class="kpi-value">51,039</div><div class="kpi-meta"></div></div>
         <div class="kpi-card" data-color="purple"><div class="kpi-top"><div class="kpi-icon purple"><i class="fas fa-chart-simple"></i></div><div class="kpi-label-top">Vendido DIMEX ✅</div></div><div class="kpi-value">$69,404</div><div class="kpi-meta"></div></div>
-        <div class="kpi-card" data-color="orange"><div class="kpi-top"><div class="kpi-icon orange"><i class="fas fa-chart-line"></i></div><div class="kpi-label-top">Vendido MULTIVA 💰</div></div><div class="kpi-value">$</div><div class="kpi-meta"></div></div>
+        <div class="kpi-card" data-color="orange"><div class="kpi-top"><div class="kpi-icon orange"><i class="fas fa-chart-line"></i></div><div class="kpi-label-top">Vendido MULTIVA 💰</div></div><div class="kpi-value">$11,500</div><div class="kpi-meta"></div></div>
         <div class="kpi-card" data-color="green"><div class="kpi-top"><div class="kpi-icon green"><i class="fas fa-percent"></i></div><div class="kpi-label-top">Contactabilidad</div></div><div class="kpi-value">14.52%</div><div class="kpi-meta"></div></div>
       </div>
     </div>
@@ -427,7 +427,7 @@
           <div class="bar-row"><div class="bar-meta"><span>🔄 Transferido: <strong>$125,000.00</strong></span><span>Meta: $600,000</span></div><div class="bar-track"><div class="bar-fill purple" id="csbTransferFill" style="width:0%"></div></div><div class="bar-pct" id="csbTransferPercent">0%</div></div>
         </div>
         <div class="progress-card"><div class="progress-card-title"><i class="fas fa-building-columns"></i> MULTIVA · Meta Compra / Transferido</div>
-          <div class="bar-row"><div class="bar-meta"><span>✅ Comprado: <strong>$0</strong></span><span>Meta: $900,000</span></div><div class="bar-track"><div class="bar-fill blue" id="multivaCompradoFill" style="width:0%"></div></div><div class="bar-pct" id="multivaCompradoPercent">0%</div></div>
+          <div class="bar-row"><div class="bar-meta"><span>✅ Comprado: <strong>$11,500</strong></span><span>Meta: $900,000</span></div><div class="bar-track"><div class="bar-fill blue" id="multivaCompradoFill" style="width:0%"></div></div><div class="bar-pct" id="multivaCompradoPercent">0%</div></div>
           <div class="bar-row"><div class="bar-meta"><span>🔄 Transferido: <strong>$111,500.00</strong></span><span>Meta: $1,500,000</span></div><div class="bar-track"><div class="bar-fill purple" id="multivaTransferFill" style="width:0%"></div></div><div class="bar-pct" id="multivaTransferPercent">0%</div></div>
         </div>
       </div>
@@ -517,7 +517,7 @@
   const AGENTES_CURRENT = [
       { nombre: "Paula", llamadas: 2282, contactos: 1990, vendido: 80867.93, transferido: 421980.62 },
     { nombre: "Vanesa", llamadas: 2338, contactos: 2263, vendido: 0, transferido: 0 },
-    { nombre: "Betzabeth", llamadas: 1595, contactos: 1321, vendido: 0, transferido: 756500 },
+    { nombre: "Betzabeth", llamadas: 1595, contactos: 1321, vendido: 11500, transferido: 756500 },
     { nombre: "Deysi", llamadas: 1326, contactos: 1312, vendido: 0, transferido: 20000 },
     { nombre: "Greisi", llamadas: 2057, contactos: 1998, vendido: 0, transferido: 115000 },
     { nombre: "Lorenys", llamadas: 2654, contactos: 2596, vendido: 0, transferido: 55000 }
@@ -726,7 +726,7 @@
     { name:"📞 Llamadas Totales", value:51039, color:"#1a56db" },
     { name:"✅ Contactables", value:7411, color:"#7c3aed" },
     { name:"🔄 Transferidas", value:61, color:"#059669" },
-    { name:"💰 Ventas Cerradas", value:4, color:"#d97706" }
+    { name:"💰 Ventas Cerradas", value:5, color:"#d97706" }
   ];
   const maxFunnel = funnelData[0].value;
   const funnelRoot = document.getElementById('funnelRoot');
@@ -760,11 +760,11 @@
   });
   
   // Gestión
-  const gestionData = [2,18,8,2,6];
+  const gestionData = [1,2,18,8,2,6];
   const gestionTotal = gestionData.reduce((a,b)=>a+b,0);
   document.getElementById('gestionTotalBadge').innerText = `Total: ${gestionTotal}`;
   new Chart(document.getElementById('gestionChart'), {
-    type:'doughnut', data:{ labels:['Seguimientos (2)','No contesta (18)', 'No cumple politicas (8)', 'Sin capacidad (2)', 'No le interesa (6)'], datasets:[{ data:gestionData, backgroundColor:['#059669','#7c3aed','#1a56db','#d97706','#db2777','#0891b2'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['Comparada (1)','Seguimientos (1)','No contesta (18)', 'No cumple politicas (8)', 'Sin capacidad (2)', 'No le interesa (6)'], datasets:[{ data:gestionData, backgroundColor:['#059669','#7c3aed','#1a56db','#d97706','#db2777','#0891b2'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/gestionTotal)*100).toFixed(1)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
 
@@ -812,7 +812,7 @@
   });
   
   new Chart(document.getElementById('ventasProductoChart'), {
-    type:'doughnut', data:{ labels:['DIMEX Vendido','Multiva Vendido', 'CSB Vendido'], datasets:[{ data:[69404.00, 0, 11463.93], backgroundColor:['#1a56db','#7c3aed','#059669'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['DIMEX Vendido','Multiva Vendido', 'CSB Vendido'], datasets:[{ data:[69404.00, 11500, 11463.93], backgroundColor:['#1a56db','#7c3aed','#059669'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:10 } } }, datalabels:{ formatter:(v,ctx)=> v>0 ? `${((v/ventasTotales)*100).toFixed(0)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
@@ -828,7 +828,7 @@
   };
   updateProgress('dimexCompradoFill','dimexCompradoPercent',69404,900000);
   updateProgress('dimexTransferFill','dimexTransferPercent',844384.62,1500000);
-  updateProgress('multivaCompradoFill','multivaCompradoPercent',0,900000);
+  updateProgress('multivaCompradoFill','multivaCompradoPercent',11500,900000);
   updateProgress('multivaTransferFill','multivaTransferPercent',111500,1500000);
   updateProgress('csbCompradoFill','csbCompradoPercent',11463.93,300000);
   updateProgress('csbTransferFill','csbTransferPercent',921863.93,600000);
