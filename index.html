@@ -769,11 +769,11 @@
   });
 
   // Estatus DIMEX
-  const dimexStatusData = [3,7,16,1];
+  const dimexStatusData = [3,9,16,5];
   const dimexStatusTotal = dimexStatusData.reduce((a,b)=>a+b,0);
   document.getElementById('dimexStatusTotalBadge').innerText = `Total: ${dimexStatusTotal}`;
   new Chart(document.getElementById('dimexStatusChart'), {
-    type:'doughnut', data:{ labels:['Aprobado (3)','Buró Crédito (7)','En seguimiento (16)','Declina oferta (1)'], datasets:[{ data:dimexStatusData, backgroundColor:['#059669','#7c3aed','#1a56db','#d97706','#db2777','#0891b2'], borderWidth:0 }] },
+    type:'doughnut', data:{ labels:['Aprobado (3)','Buró Crédito (9)','En seguimiento (16)','Declina oferta (5)'], datasets:[{ data:dimexStatusData, backgroundColor:['#059669','#7c3aed','#1a56db','#d97706','#db2777','#0891b2'], borderWidth:0 }] },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right', labels:{ font:{ size:9 } } }, datalabels:{ formatter:(v)=> v>0 ? `${((v/dimexStatusTotal)*100).toFixed(1)}%` : '', ...whiteLabelConfig } }, cutout:'60%' }
   });
   
@@ -827,7 +827,7 @@
     }
   };
   updateProgress('dimexCompradoFill','dimexCompradoPercent',69404,900000);
-  updateProgress('dimexTransferFill','dimexTransferPercent',564479.96,1500000);
+  updateProgress('dimexTransferFill','dimexTransferPercent',844384.62,1500000);
   updateProgress('multivaCompradoFill','multivaCompradoPercent',0,900000);
   updateProgress('multivaTransferFill','multivaTransferPercent',111500,1500000);
   updateProgress('csbCompradoFill','csbCompradoPercent',11463.93,300000);
